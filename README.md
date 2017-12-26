@@ -44,7 +44,7 @@ npm run reset-db
     
 3. a) в GraphQL IDE неверно работал запрос на получение events. 
 
-   - Решение: graphql/resolvers/query.js, 8 строка - заменяем argumets на {}, так как argumets .
+   - Решение: graphql/resolvers/query.js, 8 строка - заменяем argumets на {}.
  
  
    b) Неверно работал запрос на получение rooms. 
