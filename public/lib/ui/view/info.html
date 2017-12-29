@@ -1,0 +1,10 @@
+<div class="splash-content">
+    <div class="icon"><img src="media/emoji2.svg" /></div>
+    <div class="modal-header">
+        <h4 class="modal-title" style="white-space: pre-wrap;">{{title ? title : 'Уведомление'}}</h4>
+    </div>
+    <div class="modal-body" style="white-space: pre-wrap;" ng-bind-html="message"></div>
+    <div class="modal-footer">
+        <button type="button" ng-click="$close()">{{buttonName}}</button>
+    </div>
+</div>

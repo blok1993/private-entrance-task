@@ -1,0 +1,149 @@
+@import "var";
+@import "ui";
+
+.event-part {
+  .form-block {
+    @include flex();
+    flex-direction: column;
+    @include calc("height", "100vh - 147px");
+    padding: 20px 0;
+    @include border-box();
+    overflow: auto;
+    .line {
+      @include flex();
+      flex-direction: row;
+      flex-wrap: wrap;
+      margin: 10px 0;
+      flex-shrink: 0;
+      .event-header {
+        font-size: 20px;
+      }
+      [class*="col-"] {
+        padding: 0 18px;
+        @include border-box();
+        &.no-padd {
+          padding: 0;
+        }
+      }
+      .input-title {
+        margin-bottom: 4px;
+        font: $font-bold;
+      }
+      .recommended-room {
+        width: 100%;
+        padding: 10px;
+        background: #E9ECEF;
+        border-radius: 4px;
+        margin-bottom: 8px;
+        position: relative;
+        @include border-box();
+        .time {
+          font: $font-bold;
+          margin-right: 16px;
+          display: inline-block;
+        }
+        .title {
+          display: inline-block;
+        }
+        &.active {
+          background: #007DFF;
+          color: #fff;
+          .delete-room {
+            position: absolute;
+            top: 11px;
+            right: 11px;
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+            img {
+              @include center-type();
+            }
+          }
+        }
+      }
+      .participants-list {
+        @include flex();
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin-top: 12px;
+        .participant {
+          background: #E9ECEF;
+          border-radius: 16px;
+          position: relative;
+          padding-right: 36px;
+          margin-bottom: 8px;
+          margin-right: 8px;
+          .delete-participant {
+            @include control-icon();
+            img {
+              @include center-type();
+            }
+          }
+        }
+      }
+      .calendar-icon {
+        opacity: 0.43;
+        @include control-icon();
+        top: 10px;
+        right: 10px;
+        &:hover {
+          opacity: 1;
+        }
+      }
+      .time-wrap {
+        @include flex();
+        flex-direction: row;
+        flex-shrink: 0;
+        .date-part-left {
+          padding-right: 8px;
+        }
+        .date-part-right {
+          padding-left: 8px;
+        }
+        .time-divider {
+          @include flex();
+          flex-shrink: 0;
+          align-items: center;
+          justify-content: center;
+          padding-top: 16px;
+        }
+      }
+      .move-to-right {
+        @include flex();
+        flex-shrink: 0;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  .button-holder {
+    @include flex();
+    justify-content: center;
+    padding: 20px 0;
+    flex-wrap: wrap;
+    background: #fff;
+    z-index: 10;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    @include shadow(0 -1px 0 0 #E9ECEF);
+    > button {
+      margin: 0 8px;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  body {
+    overflow: auto;
+  }
+
+  .form-block {
+    .event-part {
+      .form-block {
+        height: 100%;
+      }
+    }
+  }
+}

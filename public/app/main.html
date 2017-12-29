@@ -1,0 +1,70 @@
+<div class="main-part" ng-cloak>
+    <div class="left-side">
+        <div class="chosen-date">
+            <div class="arrow control-element" ng-click="calMove(-1)">
+                <img class="icon rotate-180" src="/media/arrow.svg">
+            </div>
+            <input style="display: none" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" datepicker-template-url="lib/ui/datepicker/datepicker-tmpl.html" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+            <div class="date-title {{popup1.opened ? 'active' : ''}}" ng-click="openCalendar()">
+                <div class="date-text">{{formDateText(dt)}}</div>
+                <div class="additional-text">&nbsp;{{formAdditionalText(dt)}}</div>
+            </div>
+            <div class="arrow control-element" ng-click="calMove(1)">
+                <img class="icon" src="/media/arrow.svg">
+            </div>
+        </div>
+        <div class="floors-list">
+            <div class="floors-list-wrap">
+                <div class="floor" ng-repeat="fl in floors track by $index">
+                    <div class="floor-title title-text">{{$index + 1}} ЭТАЖ</div>
+
+                    <div class="rooms-list">
+                        <div class="room-block {{room.hovered ? 'active' : ''}} {{$odd ? 'disabled' : ''}} {{room.pressed ? 'pressed' : ''}}" ng-repeat="room in fl.rooms track by $index">
+                            <div class="room-title title-text">Ржавый Фред {{$index + 1}}</div>
+                            <div class="person-limit">до 10 человек</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="right-side">
+        <div class="timeline">
+            <div class="hour-el" ng-repeat="a in hoursArray track by $index">
+                {{a}}
+                <div class="divider"></div>
+            </div>
+
+            <div class="current-time">
+                <span class="time"></span>
+                <div class="blue-line"></div>
+            </div>
+        </div>
+        <div class="dashboard" drag-scroll="true">
+            <div ng-repeat="fl in floors track by $index" class="floor-section">
+                <div ng-repeat="room in fl.rooms track by $index" class="event-section">
+                    <div class="ev-block {{event.id === selectedEvent.id && forTooltips.showEventInfo ? 'selected' : ''}} {{event.free ? 'free' : ''}}" ng-repeat="event in room.events" ng-mouseover="toggleShowAddButton(event, true, room)" ng-mouseleave="toggleShowAddButton(event, false, room)" ng-click="toggleEventInfo($event, event)">
+                        <button ng-click="locateToEvent()" ng-if="event.free" ng-show="event.hovered" ng-mousedown="toggleAddButtonPress(true, room)" ng-mouseup="toggleAddButtonPress(false, room)" class="add-event-button">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="forTooltips.showEventInfo" class="event-info">
+                <div class="title-text">Ржавый Фред</div>
+                <div class="description">14 декабря, 15:00 - 17:00 &nbsp;·&nbsp; Жёлтый дом</div>
+
+                <div class="participants">
+                    <div class="participant">
+                        <div class="photo" style="background-image: url('https://img1.goodfon.ru/wallpaper/big/1/ca/foto-makro-kartinka-zelenye.jpg')"></div>
+                        <div class="name">Дарт Вейдер</div>
+                    </div>
+                    <div class="others">и 12 участников</div>
+                </div>
+
+                <div class="control-element edit-event" ng-click="locateToEvent()">
+                    <img src="/media/edit.svg" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

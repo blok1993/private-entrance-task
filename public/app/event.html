@@ -1,0 +1,117 @@
+<div class="event-part">
+    <div class="form-block">
+        <div class="line">
+            <div class="col-2 desktop"></div>
+            <div class="col-4">
+                <div class="event-header bold-title">Редактирование встречи</div>
+            </div>
+            <div class="col-4 desktop">
+                <div class="move-to-right">
+                    <div class="control-element" ng-click="closeEventForm()">
+                        <img src="media/close.svg" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 desktop"></div>
+        </div>
+        <div class="line">
+            <div class="col-2 desktop"></div>
+            <div class="col-4">
+                <div class="col-12 no-padd">
+                    <div class="input-title">Тема</div>
+                    <div class="input-wrap">
+                      <div class="clear-input" ng-click="clearTopic()" ng-if="q.topic.length">
+                          <img src="media/close.svg" />
+                      </div>
+                      <input ng-model="q.topic" placeholder="О чём будете говорить?" type="text"/>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="col-12 time-wrap no-padd">
+                    <div class="col-6 date-part-left no-padd">
+                      <div class="input-title">Дата</div>
+                      <div class="input-wrap">
+                          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date" datepicker-template-url="lib/ui/datepicker/datepicker-tmpl.html" is-open="popupCalendar.opened" datepicker-options="dateOptions" alt-input-formats="altInputFormats" />
+                          <div class="calendar-icon" ng-click="openEventCalendar()">
+                              <img src="media/calendar.svg" />
+                          </div>
+                      </div>
+                    </div>
+                    <div class="col-6 date-part-right no-padd">
+                        <div class="col-12 time-wrap no-padd">
+                            <div class="col-5 no-padd">
+                                <div class="input-title">Начало</div>
+                                <div class="input-wrap">
+                                    <div class="timepicker">
+                                        <input ui-mask="99:99" ng-model="eventTimeStart" class="time" type="text" ui-mask-placeholder="чч:мм" select-on-click />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="time-divider col-2 no-padd">
+                                —
+                            </div>
+                            <div class="col-5 no-padd">
+                                <div class="input-title">Конец</div>
+                                <div class="input-wrap">
+                                    <div class="timepicker">
+                                        <input ui-mask="99:99" ng-model="eventTimeEnd" class="time" type="text" ui-mask-placeholder="чч:мм" select-on-click />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 desktop"></div>
+        </div>
+        <div class="line">
+            <div class="col-2 desktop"></div>
+            <div class="col-4">
+                <div class="col-12 no-padd">
+                    <div class="input-title">Участники</div>
+                    <div class="input-wrap">
+                        <div class="clear-input" ng-click="clearParticipantName()" ng-if="q.participantName.length">
+                            <img src="media/close.svg" />
+                        </div>
+                        <input ng-model="q.participantName" placeholder="Например, Тор Одинович" type="text"/>
+                        <div class="participants-list">
+                            <div class="participant" ng-repeat="i in [1,2,3,4] track by $index">
+                                <div class="photo" style="background-image: url('https://img1.goodfon.ru/wallpaper/big/1/ca/foto-makro-kartinka-zelenye.jpg')"></div>
+                                <div class="name">Дарт Вейдер {{$index * $index + 1}}</div>
+                                <div class="delete-participant">
+                                    <img src="media/close.svg" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="input-title">Рекомендованные переговорки</div>
+                <div class="recommended-room">
+                    <div class="time">16:00 - 16:30</div>
+                    <div class="title">Готем&nbsp;·&nbsp;4 этаж</div>
+                </div>
+                <div class="recommended-room">
+                    <div class="time">17:00 - 18:30</div>
+                    <div class="title">Поле непаханное&nbsp;·&nbsp;4 этаж</div>
+                </div>
+                <div class="recommended-room active">
+                    <div class="time">16:00 - 16:30</div>
+                    <div class="title">Тест&nbsp;·&nbsp;4 этаж</div>
+                    <div class="delete-room">
+                        <img class="center-type" src="media/close2.svg" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 desktop"></div>
+        </div>
+    </div>
+
+    <div class="button-holder">
+        <button class="cancel-button" ng-click="">Отмена</button>
+        <button class="cancel-button" ng-click="removeEvent()">Удалить встречу</button>
+        <button ng-click="">Сохранить</button>
+    </div>
+</div>

@@ -1,0 +1,80 @@
+$font : 400 13px/17px HelveticaNeue,Helvetica;
+$font-medium : 600 13px/17px HelveticaNeue,Helvetica;
+$font-bold : 800 13px/17px HelveticaNeue,Helvetica;
+
+$minHourWidth : 66px;
+
+// mixin
+@mixin border-box {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing:    border-box;
+  -ms-box-sizing:     border-box;
+  -o-box-sizing:      border-box;
+  box-sizing:         border-box;
+}
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius:    $radius;
+  -ms-border-radius:     $radius;
+  -o-border-radius:      $radius;
+  border-radius:         $radius;
+}
+@mixin transition($transition) {
+  -webkit-transition: $transition;
+  -moz-transition:    $transition;
+  -ms-transition:     $transition;
+  -o-transition:      $transition;
+  transition:         $transition;
+}
+@mixin transform($transform...) {
+  -webkit-transform: $transform;
+  -moz-transform:    $transform;
+  -ms-transform:     $transform;
+  -o-transform:      $transform;
+  transform:         $transform;
+}
+@mixin animate($animate) {
+  -webkit-animation:  $animate;
+  -moz-animation:     $animate;
+  -ms-animation:      $animate;
+  -o-animation:       $animate;
+  animation:          $animate;
+}
+@mixin shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+  -moz-box-shadow:    $shadow;
+  -ms-box-shadow:     $shadow;
+  -o-box-shadow:      $shadow;
+  box-shadow:         $shadow;
+}
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
+@mixin center-type {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+@mixin flex {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+@mixin control-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  width: 16px;
+  height: 16px;
+  img {
+    @include center-type();
+  }
+}

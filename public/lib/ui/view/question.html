@@ -1,0 +1,11 @@
+<div class="splash-content info">
+    <div class="icon"><img src="media/emoji1.svg" /></div>
+    <div class="modal-header">
+        <h4 class="modal-title" style="white-space: pre-wrap;">{{title ? title : 'Выберите'}}</h4>
+    </div>
+    <div class="modal-body" style="white-space: pre-wrap;">{{message}}</div>
+    <div class="modal-footer">
+        <button class="cancel-button" type="button" ng-click="$dismiss()">{{buttonNo}}</button>
+        <button class="cancel-button" type="button" ng-click="$close()">{{buttonYes}}</button>
+    </div>
+</div>

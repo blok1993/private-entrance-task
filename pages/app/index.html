@@ -1,0 +1,48 @@
+<html>
+<head>
+    <title>Яндекс Переговорки</title>
+    <script src="/scripts/test.js"></script>
+
+    <script src="/lib/angular/angular.min.js"></script>
+    <script src="/lib/angular/angular-route.min.js"></script>
+    <script src="/lib/angular/angular-sanitize.min.js"></script>
+    <script src="/lib/angular/angular-animate.min.js"></script>
+    <script src="/lib/angular/angular-filter.min.js"></script>
+    <script src="/lib/angular/thirdparty/select/select.js"></script>
+    <script src="/lib/angular/thirdparty/mask/mask.min.js"></script>
+    <script src="/lib/angular/thirdparty/angularjs-slider/rzslider.min.js"></script>
+    <script src="/lib/angular/thirdparty/calendar/angular-bootstrap-calendar-tpls.js"></script>
+    <script src="/lib/angular/thirdparty/scrollbar/ng-scrollbar.js"></script>
+    <script src="/lib/angular/thirdparty/ui-bootstrap-tpls-1.3.3.js"></script>
+    <script src="/lib/angular/i18n/angular-locale_ru.js"></script>
+    <script src="/lib/angular/thirdparty/angular-keyboard-shortcuts/angular-keyboard-minimal.min.js"></script>
+    <script src="/lib/angular/thirdparty/angular-filter/angular-filter.min.js"></script>
+    <script src="/lib/angular/thirdparty/dragscroll.js"></script>
+
+    <link rel="stylesheet" href="/lib/angular/thirdparty/select/select.css"/>
+    <link rel="stylesheet" href="/lib/angular/thirdparty/select/select2.css"/>
+    <link rel="stylesheet" href="/lib/angular/thirdparty/select/selectize.css"/>
+    <link rel="stylesheet" href="/lib/angular/thirdparty/scrollbar/ng-scrollbar.css"/>
+
+    <link rel="stylesheet" href="/styles/main.css"/>
+    <link rel="stylesheet" href="/styles/event.css"/>
+
+    <script src="/scripts/app.js"></script>
+    <script src="/scripts/main.js"></script>
+    <script src="/scripts/event.js"></script>
+    <script src="/lib/ui/modal.js"></script>
+</head>
+<body ng-app="GlobalApp" ng-controller="GlobalController">
+    <div class="wrapper">
+        <div class="top-bar">
+            <div class="yandex-logo">
+                <img src="/media/logo.svg">
+            </div>
+
+            <button ng-if="showCreateButton" class="create-meeting" ng-click="openModal()">Создать встречу</button>
+        </div>
+
+        <div ng-view id="content"></div>
+    </div>
+</body>
+</html>
