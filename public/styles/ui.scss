@@ -25,7 +25,6 @@ body {
 .col-11 {width: 91.66%;}
 .col-12 {width: 100%;}
 
-
 //Elements
 button {
   font: $font-medium;
@@ -92,21 +91,6 @@ button {
   @include transform(rotateY(180deg));
 }
 
-.text-center {
-  text-align: center;
-}
-
-.title-text {
-  font: $font-medium;
-  line-height: 17px;
-  font-size: 15px;
-}
-
-.bold-title {
-  font: $font-bold;
-  letter-spacing: 0;
-}
-
 input, select {
   border: 2px solid #E9ECEF;
   border-radius: 4px;
@@ -120,6 +104,21 @@ input, select {
   &:focus {
     border: 2px solid #007DFF;
   }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.title-text {
+  font: $font-medium;
+  line-height: 17px;
+  font-size: 15px;
+}
+
+.bold-title {
+  font: $font-bold;
+  letter-spacing: 0;
 }
 
 .input-wrap {
@@ -224,6 +223,10 @@ input, select {
     transform: translateX(-50%) translateY(-50%);
     .icon {
       margin-bottom: 16px;
+      img {
+        width: 40px;
+        height: 40px;
+      }
     }
     .modal-title {
       font: $font-bold;
@@ -374,7 +377,7 @@ input, select {
     display: block !important;
   }
 
-  .participant .photo {
+  .participant .photo, .control-element {
     width: 32px;
     height: 32px;
   }

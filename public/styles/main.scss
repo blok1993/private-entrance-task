@@ -17,6 +17,34 @@
     height: 71px;
     @include border-box();
   }
+  .chosen-date {
+    height: 46px;
+    padding: 11px 24px;
+    @include shadow(inset 0 -1px 0 0 #E9ECEF);
+    @include border-box();
+    @include flex();
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    flex-shrink: 0;
+    background: #fff;
+    position: relative;
+    .date-title {
+      @include flex();
+      flex-direction: row;
+      align-items: center;
+      margin: 0 13px;
+      flex-shrink: 0;
+      > * {
+        font: $font-medium;
+        font-size: 15px;
+      }
+      cursor: pointer;
+      &:hover, &.active {
+        color: #0070E0;
+      }
+    }
+  }
   .main-part {
     @include flex();
     flex-direction: row;
@@ -26,34 +54,6 @@
       @include flex();
       flex-direction: column;
       flex-shrink: 0;
-      .chosen-date {
-        height: 46px;
-        padding: 11px 24px;
-        @include shadow(inset 0 -1px 0 0 #E9ECEF);
-        @include border-box();
-        @include flex();
-        justify-content: space-between;
-        flex-direction: row;
-        align-items: center;
-        flex-shrink: 0;
-        background: #fff;
-        position: relative;
-        .date-title {
-          @include flex();
-          flex-direction: row;
-          align-items: center;
-          margin: 0 13px;
-          flex-shrink: 0;
-          > * {
-            font: $font-medium;
-            font-size: 15px;
-          }
-          cursor: pointer;
-          &:hover, &.active {
-            color: #0070E0;
-          }
-        }
-      }
       .floors-list {
         @include flex();
         flex-direction: column;
@@ -254,6 +254,25 @@
   .wrapper {
     .top-bar {
       height: 48px;
+    }
+    .chosen-date {
+      height: 56px;
+    }
+    .main-part {
+      .left-side {
+        .floors-list {
+          margin-top: 32px;
+          @include shadow(0 -1px 0 0 #E9ECEF);
+        }
+      }
+      .right-side {
+        .timeline {
+          height: 32px;
+          .divider {
+            top: 23px;
+          }
+        }
+      }
     }
   }
 }

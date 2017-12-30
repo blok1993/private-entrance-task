@@ -106,18 +106,6 @@ button {
   -o-transform: rotateY(180deg);
   transform: rotateY(180deg); }
 
-.text-center {
-  text-align: center; }
-
-.title-text {
-  font: 600 13px/17px HelveticaNeue, Helvetica;
-  line-height: 17px;
-  font-size: 15px; }
-
-.bold-title {
-  font: 800 13px/17px HelveticaNeue, Helvetica;
-  letter-spacing: 0; }
-
 input, select {
   border: 2px solid #E9ECEF;
   border-radius: 4px;
@@ -134,6 +122,18 @@ input, select {
   overflow: hidden; }
   input:focus, select:focus {
     border: 2px solid #007DFF; }
+
+.text-center {
+  text-align: center; }
+
+.title-text {
+  font: 600 13px/17px HelveticaNeue, Helvetica;
+  line-height: 17px;
+  font-size: 15px; }
+
+.bold-title {
+  font: 800 13px/17px HelveticaNeue, Helvetica;
+  letter-spacing: 0; }
 
 .input-wrap {
   position: relative; }
@@ -243,6 +243,9 @@ input, select {
     transform: translateX(-50%) translateY(-50%); }
     .splash .splash-content .icon {
       margin-bottom: 16px; }
+      .splash .splash-content .icon img {
+        width: 40px;
+        height: 40px; }
     .splash .splash-content .modal-title {
       font: 800 13px/17px HelveticaNeue, Helvetica;
       font-size: 20px;
@@ -361,7 +364,7 @@ input, select {
   .mobile {
     display: block !important; }
 
-  .participant .photo {
+  .participant .photo, .control-element {
     width: 32px;
     height: 32px; } }
 .event-part .form-block {

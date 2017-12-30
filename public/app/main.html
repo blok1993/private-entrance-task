@@ -1,6 +1,22 @@
+<div class="mobile">
+    <div class="chosen-date">
+        <div class="arrow control-element" ng-click="calMove(-1)">
+            <img class="icon rotate-180" src="/media/arrow.svg">
+        </div>
+        <input style="display: none" type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" datepicker-template-url="lib/ui/datepicker/datepicker-tmpl.html" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+        <div class="date-title {{popup1.opened ? 'active' : ''}}" ng-click="openCalendar()">
+            <div class="date-text">{{formDateText(dt)}}</div>
+            <div class="additional-text">&nbsp;{{formAdditionalText(dt)}}</div>
+        </div>
+        <div class="arrow control-element" ng-click="calMove(1)">
+            <img class="icon" src="/media/arrow.svg">
+        </div>
+    </div>
+</div>
+
 <div class="main-part" ng-cloak>
     <div class="left-side">
-        <div class="chosen-date">
+        <div class="chosen-date desktop">
             <div class="arrow control-element" ng-click="calMove(-1)">
                 <img class="icon rotate-180" src="/media/arrow.svg">
             </div>
