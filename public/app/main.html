@@ -46,7 +46,7 @@
     </div>
     <div class="right-side">
         <div class="timeline">
-            <div class="hour-el" ng-repeat="a in hoursArray track by $index">
+            <div class="hour-el {{isPreviousHour(a) ? 'prev' : ''}}" ng-repeat="a in hoursArray track by $index">
                 {{a}}
                 <div class="divider"></div>
             </div>

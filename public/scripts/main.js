@@ -13,6 +13,7 @@
             $scope.formAdditionalText = formAdditionalText;
             $scope.calMove = calMove;
             $scope.locateToEvent = locateToEvent;
+            $scope.isPreviousHour = isPreviousHour;
 
             $scope.hoursArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
             $scope.selectedEvent = {};
@@ -200,6 +201,10 @@
                 $location.path('/event').search({id: eventId});
             }
 
+            function isPreviousHour(h) {
+                return h <= new Date().getHours();
+            }
+
             //Drag of dashboard
             var dashboard = document.getElementsByClassName("dashboard");
             var wrappedResult = angular.element(dashboard);
@@ -245,7 +250,7 @@
                     var xPos;
 
                     if(new Date().getHours() === 23 && new Date().getMinutes() > 30) {
-                        xPos = (new Date().getMinutes() - 30) * timeline[0].clientWidth / (24 * 60) - currentTimeElement.clientWidth / 2;
+                        xPos = (new Date().getMinutes() - 30) * timeline[0].clientWidth / (24 * 60) - currentTimeElement.clientWidth / 2 < 0 ? 0 : (new Date().getMinutes() - 30) * timeline[0].clientWidth / (24 * 60) - currentTimeElement.clientWidth / 2;
                     } else {
                         xPos = (new Date().getHours() * 60 + new Date().getMinutes() + 30) * timeline[0].clientWidth / (24 * 60) - currentTimeElement.clientWidth / 2;
                     }

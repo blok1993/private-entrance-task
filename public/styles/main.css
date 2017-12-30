@@ -709,6 +709,8 @@ input, select {
     box-shadow: 0 -1px 0 0 #E9ECEF; }
   .wrapper .main-part .right-side .timeline {
     height: 32px; }
+    .wrapper .main-part .right-side .timeline .current-time {
+      top: 5px; }
     .wrapper .main-part .right-side .timeline .divider {
       top: 23px; } }
 
