@@ -116,6 +116,7 @@ input, select {
   width: 100%;
   padding: 0 10px;
   letter-spacing: 0.47px;
+  overflow: hidden;
   &:focus {
     border: 2px solid #007DFF;
   }
@@ -127,7 +128,7 @@ input, select {
     position: absolute;
     width: 16px;
     height: 16px;
-    top: 10px;
+    @include calc("top", "50% - 8px");
     right: 10px;
     cursor: pointer;
     img {
@@ -210,8 +211,8 @@ input, select {
   height: 100%;
   background: rgba(0,16,33,0.4);
   .splash-content {
-    min-width: 444px;
-    padding: 32px 62px;
+    min-width: 300px;
+    padding: 30px 25px;
     @include border-box();
     background: #FFFFFF;
     box-shadow: 0 1px 16px 0 rgba(0,44,92,0.28);
@@ -292,13 +293,89 @@ input, select {
   }
 }
 
+//Select element
+.selectize-control.single .selectize-input {
+  background: #fff;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  input {
+    padding: 0 10px !important;
+    border: 2px solid #E9ECEF !important;
+    outline: none !important;
+    @include border-radius(4px !important);
+    width: 100% !important;
+    margin: 0 !important;
+    -webkit-appearance: none;
+  }
+  &.focus {
+    input {
+      border-color: #007DFF !important;
+    }
+  }
+}
+
+.selectize-control.single.open .selectize-input::after,
+.selectize-control.single.open .selectize-input::before,
+.selectize-control.single .selectize-input::after,
+.selectize-control.single .selectize-input::before {
+  display: none;
+}
+
+.selectize-dropdown {
+  margin: 0;
+  background: #FFFFFF;
+  box-shadow: 0 1px 10px 0 rgba(0,44,92,0.28);
+  @include border-radius(4px);
+  border: none;
+  .active {
+    background: #F6F7F9;
+    color: #000;
+    * {
+      font: $font-bold;
+    }
+  }
+  [data-selectable] {
+    padding: 5px 16px;
+  }
+}
+
+.selectize-dropdown-content {
+  max-height: 136px;
+  &::-webkit-scrollbar
+  {
+    width: 16px !important;
+  }
+  &::-webkit-scrollbar-thumb
+  {
+    border-radius: 100px;
+    background-color: #D5DFE9;
+    border: 4px solid #fff;
+  }
+}
+
+/* For mobile phones: */
+.mobile {
+  display: none !important;
+}
+
 @media only screen and (max-width: 768px) {
-  /* For mobile phones: */
   [class*="col-"] {
     width: 100%;
     margin-top: 8px;
   }
+
   .desktop {
-    display: none;
+    display: none !important;
+  }
+
+  .mobile {
+    display: block !important;
+  }
+
+  .participant .photo {
+    width: 32px;
+    height: 32px;
   }
 }

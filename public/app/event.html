@@ -1,9 +1,9 @@
 <div class="event-part">
-    <div class="form-block">
+    <div class="form-block {{isNewEvent ? 'new' : ''}}">
         <div class="line">
             <div class="col-2 desktop"></div>
             <div class="col-4">
-                <div class="event-header bold-title">Редактирование встречи</div>
+                <div class="event-header bold-title">{{isNewEvent ? "Новая встреча" : "Редактирование встречи"}}</div>
             </div>
             <div class="col-4 desktop">
                 <div class="move-to-right">
@@ -30,7 +30,8 @@
             <div class="col-4">
                 <div class="col-12 time-wrap no-padd">
                     <div class="col-6 date-part-left no-padd">
-                      <div class="input-title">Дата</div>
+                      <div class="input-title desktop">Дата</div>
+                      <div class="input-title mobile">Дата и время</div>
                       <div class="input-wrap">
                           <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date" datepicker-template-url="lib/ui/datepicker/datepicker-tmpl.html" is-open="popupCalendar.opened" datepicker-options="dateOptions" alt-input-formats="altInputFormats" />
                           <div class="calendar-icon" ng-click="openEventCalendar()">
@@ -39,9 +40,9 @@
                       </div>
                     </div>
                     <div class="col-6 date-part-right no-padd">
-                        <div class="col-12 time-wrap no-padd">
-                            <div class="col-5 no-padd">
-                                <div class="input-title">Начало</div>
+                        <div class="col-12 special-time-wrap no-padd">
+                            <div class="col-5 time-col no-padd">
+                                <div class="input-title desktop">Начало</div>
                                 <div class="input-wrap">
                                     <div class="timepicker">
                                         <input ui-mask="99:99" ng-model="eventTimeStart" class="time" type="text" ui-mask-placeholder="чч:мм" select-on-click />
@@ -51,8 +52,8 @@
                             <div class="time-divider col-2 no-padd">
                                 —
                             </div>
-                            <div class="col-5 no-padd">
-                                <div class="input-title">Конец</div>
+                            <div class="col-5 time-col no-padd">
+                                <div class="input-title desktop">Конец</div>
                                 <div class="input-wrap">
                                     <div class="timepicker">
                                         <input ui-mask="99:99" ng-model="eventTimeEnd" class="time" type="text" ui-mask-placeholder="чч:мм" select-on-click />
@@ -67,19 +68,25 @@
         </div>
         <div class="line">
             <div class="col-2 desktop"></div>
-            <div class="col-4">
+            <div class="col-4 for-participants">
                 <div class="col-12 no-padd">
                     <div class="input-title">Участники</div>
                     <div class="input-wrap">
-                        <div class="clear-input" ng-click="clearParticipantName()" ng-if="q.participantName.length">
-                            <img src="media/close.svg" />
-                        </div>
-                        <input ng-model="q.participantName" placeholder="Например, Тор Одинович" type="text"/>
+                        <ui-select ng-model="person.selected" theme="selectize" on-select="addParticipantToEvent(person.selected)">
+                            <ui-select-match placeholder="Например, Тор Одинович">{{$select.selected.name}}</ui-select-match>
+                            <ui-select-choices repeat="item in people | filter: $select.search" ng-scrollable>
+                                <div class="participant">
+                                    <div class="photo" style="background-image: url('https://img1.goodfon.ru/wallpaper/big/1/ca/foto-makro-kartinka-zelenye.jpg')"></div>
+                                    <div class="name" ng-bind-html="item.name + '&nbsp;·&nbsp;'"></div>
+                                    <div class="participant-floor" ng-bind-html="item.floor + ' этаж'"></div>
+                                </div>
+                            </ui-select-choices>
+                        </ui-select>
                         <div class="participants-list">
-                            <div class="participant" ng-repeat="i in [1,2,3,4] track by $index">
+                            <div class="participant" ng-repeat="p in addedPeople track by $index">
                                 <div class="photo" style="background-image: url('https://img1.goodfon.ru/wallpaper/big/1/ca/foto-makro-kartinka-zelenye.jpg')"></div>
-                                <div class="name">Дарт Вейдер {{$index * $index + 1}}</div>
-                                <div class="delete-participant">
+                                <div class="name">{{p.name}}</div>
+                                <div class="delete-participant" ng-click="removeParticipantFromEvent(p)">
                                     <img src="media/close.svg" />
                                 </div>
                             </div>
@@ -87,31 +94,56 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
-                <div class="input-title">Рекомендованные переговорки</div>
-                <div class="recommended-room">
-                    <div class="time">16:00 - 16:30</div>
-                    <div class="title">Готем&nbsp;·&nbsp;4 этаж</div>
-                </div>
-                <div class="recommended-room">
-                    <div class="time">17:00 - 18:30</div>
-                    <div class="title">Поле непаханное&nbsp;·&nbsp;4 этаж</div>
-                </div>
-                <div class="recommended-room active">
-                    <div class="time">16:00 - 16:30</div>
-                    <div class="title">Тест&nbsp;·&nbsp;4 этаж</div>
-                    <div class="delete-room">
-                        <img class="center-type" src="media/close2.svg" />
+            <div class="col-4 for-rooms {{!roomIsSelected ? 'room-is-not-selected' : ''}}">
+                <div class="col-12 no-padd">
+                    <div class="input-title">{{roomIsSelected ? "Ваша переговорка" : "Рекомендованные переговорки"}}</div>
+                    <div class="recommended-room" ng-repeat="i in [1, 2, 3] track by $index" ng-click="toggleRoomSelection(true)" ng-if="!roomIsSelected">
+                        <div class="time">16:00 - 16:30</div>
+                        <div class="title">Готем&nbsp;·&nbsp;4 этаж</div>
+                    </div>
+                    <div class="recommended-room active" ng-if="roomIsSelected">
+                        <div class="time">16:00 - 16:30</div>
+                        <div class="title">Готем&nbsp;·&nbsp;4 этаж</div>
+                        <div class="delete-room" ng-click="toggleRoomSelection(false)">
+                            <img class="center-type" src="media/close2.svg" />
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-2 desktop"></div>
         </div>
+        <div class="line mobile" ng-if="!isNewEvent">
+            <div class="col-12 no-padd for-deleting">
+                <div class="delete-event-block" ng-click="removeEvent()">
+                    Удалить встречу
+                </div>
+            </div>
+        </div>
+        <div class="line mobile room-hint" ng-if="isNewEvent && !roomIsSelected">
+            <div class="col-12 no-padd">
+                <div class="pick-room-hint">
+                    Выберите переговорку
+                </div>
+            </div>
+        </div>
+        <div class="line mobile" ng-if="!isNewEvent">
+            <div class="col-12 for-deleting">
+                <div class="button-holder">
+                    <button class="cancel-button" ng-click="closeEventForm()">Отмена</button>
+                    <button ng-click="">Сохранить</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="button-holder">
-        <button class="cancel-button" ng-click="">Отмена</button>
-        <button class="cancel-button" ng-click="removeEvent()">Удалить встречу</button>
-        <button ng-click="">Сохранить</button>
+    <div class="button-holder creation mobile" ng-if="isNewEvent">
+        <button ng-disabled="!roomIsSelected" ng-click="">Создать встречу</button>
+    </div>
+
+    <div class="button-holder desktop">
+        <button class="cancel-button" ng-click="closeEventForm()">Отмена</button>
+        <button ng-if="!isNewEvent" class="cancel-button" ng-click="removeEvent()">Удалить встречу</button>
+        <button ng-if="!isNewEvent">Сохранить</button>
+        <button ng-if="isNewEvent" ng-click="">Создать встречу</button>
     </div>
 </div>

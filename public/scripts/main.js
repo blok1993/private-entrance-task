@@ -196,8 +196,8 @@
                 room.pressed = a;
             }
 
-            function locateToEvent(id) {
-                $location.path('/event');
+            function locateToEvent(eventId) {
+                $location.path('/event').search({id: eventId});
             }
 
             //Drag of dashboard

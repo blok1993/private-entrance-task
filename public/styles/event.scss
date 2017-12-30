@@ -16,7 +16,7 @@
       margin: 10px 0;
       flex-shrink: 0;
       .event-header {
-        font-size: 20px;
+        font-size: 20px !important;
       }
       [class*="col-"] {
         padding: 0 18px;
@@ -39,7 +39,7 @@
         @include border-box();
         .time {
           font: $font-bold;
-          margin-right: 16px;
+          margin-right: 14px;
           display: inline-block;
         }
         .title {
@@ -50,7 +50,7 @@
           color: #fff;
           .delete-room {
             position: absolute;
-            top: 11px;
+            @include calc("top","50% - 8px");
             right: 11px;
             cursor: pointer;
             width: 16px;
@@ -59,6 +59,11 @@
               @include center-type();
             }
           }
+        }
+        &:hover:not(.active) {
+          cursor: pointer;
+          background: #007DFF;
+          color: #fff;
         }
       }
       .participants-list {
@@ -84,13 +89,13 @@
       .calendar-icon {
         opacity: 0.43;
         @include control-icon();
-        top: 10px;
+        @include calc("top", "50% - 8px");
         right: 10px;
         &:hover {
           opacity: 1;
         }
       }
-      .time-wrap {
+      .time-wrap, .special-time-wrap {
         @include flex();
         flex-direction: row;
         flex-shrink: 0;
@@ -105,13 +110,21 @@
           flex-shrink: 0;
           align-items: center;
           justify-content: center;
-          padding-top: 16px;
+          padding-top: 18px;
         }
       }
       .move-to-right {
         @include flex();
         flex-shrink: 0;
         justify-content: flex-end;
+      }
+      .selectize-dropdown {
+        .participant-floor {
+          color: #858E98;
+        }
+      }
+      [uib-datepicker-popup-wrap] {
+        left: 0;
       }
     }
   }
@@ -133,16 +146,109 @@
   }
 }
 
+/* For mobile phones: */
 @media only screen and (max-width: 768px) {
-  /* For mobile phones: */
+  .event-part {
+    * {
+      font-size: 15px !important;
+    }
+  }
+
   body {
     overflow: auto;
   }
 
-  .form-block {
-    .event-part {
-      .form-block {
-        height: 100%;
+  input, select, button {
+    height: 44px !important;
+  }
+
+  .input-title {
+    font-size: 13px !important;
+  }
+
+  .event-part {
+    .form-block {
+      @include calc("height", "100vh - 48px");
+      padding-bottom: 0;
+      &.new {
+        @include calc("height", "100vh - 128px");
+        .for-rooms.room-is-not-selected {
+          padding-bottom: 44px;
+        }
+      }
+      .line {
+        margin: 0;
+        .for-participants, .for-rooms, .for-deleting {
+          margin-top: 16px;
+          padding-top: 16px;
+          @include shadow(inset 0px 8px 0 0 #E9ECEF);
+        }
+        .delete-event-block {
+          @include flex();
+          align-items: center;
+          justify-content: center;
+          color: #FF3333;
+          text-align: center;
+          cursor: pointer;
+          padding: 28px 0 8px 0;
+          font: $font-medium;
+        }
+        &.room-hint {
+          position: fixed;
+          bottom: 80px;
+          z-index: 11;
+          width: 100%;
+          .pick-room-hint {
+            opacity: 0.93;
+            background: rgba(0,16,33,0.80);
+            padding: 13px 18px;
+            color: #fff;
+            font: $font-bold;
+            font-size: 15px;
+          }
+        }
+        .time-wrap {
+          display: block;
+          .date-part-left, .date-part-right {
+            padding: 0;
+          }
+        }
+        .special-time-wrap {
+          .time-divider {
+            display: block;
+            text-align: center;
+            width: auto;
+            margin: 0 10px;
+            padding-top: 12px;
+          }
+          .time-col {
+            @include flex();
+            flex-direction: column;
+            flex-grow: 1;
+            width: auto;
+            margin: 0;
+          }
+        }
+        .participants-list {
+          .participant {
+            width: 100%;
+            margin-right: 0;
+          }
+        }
+        .recommended-room {
+          padding: 13px;
+        }
+      }
+    }
+    .button-holder {
+      position: relative;
+      justify-content: flex-end;
+      @include shadow(none);
+      padding-top: 10px;
+      &.creation {
+        justify-content: center;
+        display: flex !important;
+        padding-top: 16px;
       }
     }
   }

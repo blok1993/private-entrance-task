@@ -130,7 +130,8 @@ input, select {
   box-sizing: border-box;
   width: 100%;
   padding: 0 10px;
-  letter-spacing: 0.47px; }
+  letter-spacing: 0.47px;
+  overflow: hidden; }
   input:focus, select:focus {
     border: 2px solid #007DFF; }
 
@@ -140,7 +141,9 @@ input, select {
     position: absolute;
     width: 16px;
     height: 16px;
-    top: 10px;
+    top: -moz-calc(50% - 8px);
+    top: -webkit-calc(50% - 8px);
+    top: calc(50% - 8px);
     right: 10px;
     cursor: pointer; }
     .input-wrap .clear-input img {
@@ -223,8 +226,8 @@ input, select {
   height: 100%;
   background: rgba(0, 16, 33, 0.4); }
   .splash .splash-content {
-    min-width: 444px;
-    padding: 32px 62px;
+    min-width: 300px;
+    padding: 30px 25px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -289,14 +292,78 @@ input, select {
     text-transform: capitalize;
     font: 600 13px/17px HelveticaNeue, Helvetica; }
 
+.selectize-control.single .selectize-input {
+  background: #fff;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0; }
+  .selectize-control.single .selectize-input input {
+    padding: 0 10px !important;
+    border: 2px solid #E9ECEF !important;
+    outline: none !important;
+    -webkit-border-radius: 4px !important;
+    -moz-border-radius: 4px !important;
+    -ms-border-radius: 4px !important;
+    -o-border-radius: 4px !important;
+    border-radius: 4px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    -webkit-appearance: none; }
+  .selectize-control.single .selectize-input.focus input {
+    border-color: #007DFF !important; }
+
+.selectize-control.single.open .selectize-input::after,
+.selectize-control.single.open .selectize-input::before,
+.selectize-control.single .selectize-input::after,
+.selectize-control.single .selectize-input::before {
+  display: none; }
+
+.selectize-dropdown {
+  margin: 0;
+  background: #FFFFFF;
+  box-shadow: 0 1px 10px 0 rgba(0, 44, 92, 0.28);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  border: none; }
+  .selectize-dropdown .active {
+    background: #F6F7F9;
+    color: #000; }
+    .selectize-dropdown .active * {
+      font: 800 13px/17px HelveticaNeue, Helvetica; }
+  .selectize-dropdown [data-selectable] {
+    padding: 5px 16px; }
+
+.selectize-dropdown-content {
+  max-height: 136px; }
+  .selectize-dropdown-content::-webkit-scrollbar {
+    width: 16px !important; }
+  .selectize-dropdown-content::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    background-color: #D5DFE9;
+    border: 4px solid #fff; }
+
+/* For mobile phones: */
+.mobile {
+  display: none !important; }
+
 @media only screen and (max-width: 768px) {
-  /* For mobile phones: */
   [class*="col-"] {
     width: 100%;
     margin-top: 8px; }
 
   .desktop {
-    display: none; } }
+    display: none !important; }
+
+  .mobile {
+    display: block !important; }
+
+  .participant .photo {
+    width: 32px;
+    height: 32px; } }
 .event-part .form-block {
   display: -webkit-box;
   display: -moz-box;
@@ -325,7 +392,7 @@ input, select {
     margin: 10px 0;
     flex-shrink: 0; }
     .event-part .form-block .line .event-header {
-      font-size: 20px; }
+      font-size: 20px !important; }
     .event-part .form-block .line [class*="col-"] {
       padding: 0 18px;
       -webkit-box-sizing: border-box;
@@ -352,7 +419,7 @@ input, select {
       box-sizing: border-box; }
       .event-part .form-block .line .recommended-room .time {
         font: 800 13px/17px HelveticaNeue, Helvetica;
-        margin-right: 16px;
+        margin-right: 14px;
         display: inline-block; }
       .event-part .form-block .line .recommended-room .title {
         display: inline-block; }
@@ -361,7 +428,9 @@ input, select {
         color: #fff; }
         .event-part .form-block .line .recommended-room.active .delete-room {
           position: absolute;
-          top: 11px;
+          top: -moz-calc(50% - 8px);
+          top: -webkit-calc(50% - 8px);
+          top: calc(50% - 8px);
           right: 11px;
           cursor: pointer;
           width: 16px;
@@ -373,6 +442,10 @@ input, select {
             right: 0;
             left: 0;
             margin: auto; }
+      .event-part .form-block .line .recommended-room:hover:not(.active) {
+        cursor: pointer;
+        background: #007DFF;
+        color: #fff; }
     .event-part .form-block .line .participants-list {
       display: -webkit-box;
       display: -moz-box;
@@ -392,7 +465,9 @@ input, select {
         .event-part .form-block .line .participants-list .participant .delete-participant {
           cursor: pointer;
           position: absolute;
-          top: 4px;
+          top: -moz-calc(50% - 8px);
+          top: -webkit-calc(50% - 8px);
+          top: calc(50% - 8px);
           right: 8px;
           width: 16px;
           height: 16px; }
@@ -414,11 +489,15 @@ input, select {
       opacity: 0.43;
       cursor: pointer;
       position: absolute;
-      top: 4px;
+      top: -moz-calc(50% - 8px);
+      top: -webkit-calc(50% - 8px);
+      top: calc(50% - 8px);
       right: 8px;
       width: 16px;
       height: 16px;
-      top: 10px;
+      top: -moz-calc(50% - 8px);
+      top: -webkit-calc(50% - 8px);
+      top: calc(50% - 8px);
       right: 10px; }
       .event-part .form-block .line .calendar-icon img {
         position: absolute;
@@ -429,7 +508,7 @@ input, select {
         margin: auto; }
       .event-part .form-block .line .calendar-icon:hover {
         opacity: 1; }
-    .event-part .form-block .line .time-wrap {
+    .event-part .form-block .line .time-wrap, .event-part .form-block .line .special-time-wrap {
       display: -webkit-box;
       display: -moz-box;
       display: -ms-flexbox;
@@ -437,11 +516,11 @@ input, select {
       display: flex;
       flex-direction: row;
       flex-shrink: 0; }
-      .event-part .form-block .line .time-wrap .date-part-left {
+      .event-part .form-block .line .time-wrap .date-part-left, .event-part .form-block .line .special-time-wrap .date-part-left {
         padding-right: 8px; }
-      .event-part .form-block .line .time-wrap .date-part-right {
+      .event-part .form-block .line .time-wrap .date-part-right, .event-part .form-block .line .special-time-wrap .date-part-right {
         padding-left: 8px; }
-      .event-part .form-block .line .time-wrap .time-divider {
+      .event-part .form-block .line .time-wrap .time-divider, .event-part .form-block .line .special-time-wrap .time-divider {
         display: -webkit-box;
         display: -moz-box;
         display: -ms-flexbox;
@@ -450,7 +529,7 @@ input, select {
         flex-shrink: 0;
         align-items: center;
         justify-content: center;
-        padding-top: 16px; }
+        padding-top: 18px; }
     .event-part .form-block .line .move-to-right {
       display: -webkit-box;
       display: -moz-box;
@@ -459,6 +538,10 @@ input, select {
       display: flex;
       flex-shrink: 0;
       justify-content: flex-end; }
+    .event-part .form-block .line .selectize-dropdown .participant-floor {
+      color: #858E98; }
+    .event-part .form-block .line [uib-datepicker-popup-wrap] {
+      left: 0; }
 .event-part .button-holder {
   display: -webkit-box;
   display: -moz-box;
@@ -481,12 +564,103 @@ input, select {
   .event-part .button-holder > button {
     margin: 0 8px; }
 
+/* For mobile phones: */
 @media only screen and (max-width: 768px) {
-  /* For mobile phones: */
+  .event-part * {
+    font-size: 15px !important; }
+
   body {
     overflow: auto; }
 
-  .form-block .event-part .form-block {
-    height: 100%; } }
+  input, select, button {
+    height: 44px !important; }
+
+  .input-title {
+    font-size: 13px !important; }
+
+  .event-part .form-block {
+    height: -moz-calc(100vh - 48px);
+    height: -webkit-calc(100vh - 48px);
+    height: calc(100vh - 48px);
+    padding-bottom: 0; }
+    .event-part .form-block.new {
+      height: -moz-calc(100vh - 128px);
+      height: -webkit-calc(100vh - 128px);
+      height: calc(100vh - 128px); }
+      .event-part .form-block.new .for-rooms.room-is-not-selected {
+        padding-bottom: 44px; }
+    .event-part .form-block .line {
+      margin: 0; }
+      .event-part .form-block .line .for-participants, .event-part .form-block .line .for-rooms, .event-part .form-block .line .for-deleting {
+        margin-top: 16px;
+        padding-top: 16px;
+        -webkit-box-shadow: inset 0px 8px 0 0 #E9ECEF;
+        -moz-box-shadow: inset 0px 8px 0 0 #E9ECEF;
+        -ms-box-shadow: inset 0px 8px 0 0 #E9ECEF;
+        -o-box-shadow: inset 0px 8px 0 0 #E9ECEF;
+        box-shadow: inset 0px 8px 0 0 #E9ECEF; }
+      .event-part .form-block .line .delete-event-block {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #FF3333;
+        text-align: center;
+        cursor: pointer;
+        padding: 28px 0 8px 0;
+        font: 600 13px/17px HelveticaNeue, Helvetica; }
+      .event-part .form-block .line.room-hint {
+        position: fixed;
+        bottom: 80px;
+        z-index: 11;
+        width: 100%; }
+        .event-part .form-block .line.room-hint .pick-room-hint {
+          opacity: 0.93;
+          background: rgba(0, 16, 33, 0.8);
+          padding: 13px 18px;
+          color: #fff;
+          font: 800 13px/17px HelveticaNeue, Helvetica;
+          font-size: 15px; }
+      .event-part .form-block .line .time-wrap {
+        display: block; }
+        .event-part .form-block .line .time-wrap .date-part-left, .event-part .form-block .line .time-wrap .date-part-right {
+          padding: 0; }
+      .event-part .form-block .line .special-time-wrap .time-divider {
+        display: block;
+        text-align: center;
+        width: auto;
+        margin: 0 10px;
+        padding-top: 12px; }
+      .event-part .form-block .line .special-time-wrap .time-col {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        width: auto;
+        margin: 0; }
+      .event-part .form-block .line .participants-list .participant {
+        width: 100%;
+        margin-right: 0; }
+      .event-part .form-block .line .recommended-room {
+        padding: 13px; }
+  .event-part .button-holder {
+    position: relative;
+    justify-content: flex-end;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    -o-box-shadow: none;
+    box-shadow: none;
+    padding-top: 10px; }
+    .event-part .button-holder.creation {
+      justify-content: center;
+      display: flex !important;
+      padding-top: 16px; } }
 
 /*# sourceMappingURL=event.css.map */
