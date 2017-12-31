@@ -3,18 +3,6 @@
         .controller("MainController", function MainController($scope, $rootScope, $location)
         {
             $rootScope.showCreateButton = true;
-            $scope.toggleEventInfo = toggleEventInfo;
-            $scope.toggleAddButtonPress = toggleAddButtonPress;
-            $scope.toggleShowAddButton = toggleShowAddButton;
-            $scope.today = today;
-            $scope.openCalendar = openCalendar;
-            $scope.setDate = setDate;
-            $scope.formDateText = formDateText;
-            $scope.formAdditionalText = formAdditionalText;
-            $scope.calMove = calMove;
-            $scope.locateToEvent = locateToEvent;
-            $scope.isPreviousHour = isPreviousHour;
-
             $scope.hoursArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
             $scope.selectedEvent = {};
             $scope.forTooltips = {};
@@ -186,10 +174,27 @@
                 }
             ];
 
+            $scope.toggleEventInfo = toggleEventInfo;
+            $scope.toggleAddButtonPress = toggleAddButtonPress;
+            $scope.toggleShowAddButton = toggleShowAddButton;
+            $scope.today = today;
+            $scope.openCalendar = openCalendar;
+            $scope.setDate = setDate;
+            $scope.formDateText = formDateText;
+            $scope.formAdditionalText = formAdditionalText;
+            $scope.calMove = calMove;
+            $scope.locateToEvent = locateToEvent;
+            $scope.isPreviousHour = isPreviousHour;
+            $scope.moveAddButton = moveAddButton;
+
             function toggleShowAddButton(ev, a, room) {
                 if(ev.free) {
                     ev.hovered = a;
                     room.hovered = a;
+                }
+
+                if(!a) {
+                    room.pressed = false;
                 }
             }
 
@@ -219,6 +224,12 @@
                 floorsList[0].style.transform = "translateY(-" + e.target.scrollTop + "px)";
             });
 
+            function moveAddButton(e, ev) {
+                if(ev.free && e.target.children[0]) {
+                    e.target.children[0].style.top = e.target.offsetTop - dashboard[0].scrollTop;
+                    e.target.children[0].style.left = e.clientX - 28;
+                }
+            }
 
             function toggleEventInfo(e, ev) {
                 e = e || window.event;
@@ -238,6 +249,8 @@
 
                     eventInfoBlock.style.left = (preLeft +eventBlockWidth > document.body.clientWidth ? (document.body.clientWidth -  eventBlockWidth) : preLeft) + "px";
                     eventInfoBlock.style.top = e.currentTarget.getBoundingClientRect().top + e.currentTarget.clientHeight + "px";
+                } else {
+                    locateToEvent();
                 }
             }
 

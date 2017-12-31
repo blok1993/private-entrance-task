@@ -59,8 +59,8 @@
         <div class="dashboard" drag-scroll="true">
             <div ng-repeat="fl in floors track by $index" class="floor-section">
                 <div ng-repeat="room in fl.rooms track by $index" class="event-section">
-                    <div class="ev-block {{event.id === selectedEvent.id && forTooltips.showEventInfo ? 'selected' : ''}} {{event.free ? 'free' : ''}}" ng-repeat="event in room.events" ng-mouseover="toggleShowAddButton(event, true, room)" ng-mouseleave="toggleShowAddButton(event, false, room)" ng-click="toggleEventInfo($event, event)">
-                        <button ng-click="locateToEvent()" ng-if="event.free" ng-show="event.hovered" ng-mousedown="toggleAddButtonPress(true, room)" ng-mouseup="toggleAddButtonPress(false, room)" class="add-event-button">+</button>
+                    <div class="ev-block {{event.id === selectedEvent.id && forTooltips.showEventInfo ? 'selected' : ''}} {{event.free ? 'free' : ''}}" ng-repeat="event in room.events" ng-mouseover="toggleShowAddButton(event, true, room)" ng-mouseleave="toggleShowAddButton(event, false, room)" ng-click="toggleEventInfo($event, event)" ng-mousemove="moveAddButton($event, event)">
+                        <button ng-if="event.free" ng-show="event.hovered" ng-mousedown="toggleAddButtonPress(true, room)" ng-mouseup="toggleAddButtonPress(false, room)" class="add-event-button desktop">+</button>
                     </div>
                 </div>
             </div>

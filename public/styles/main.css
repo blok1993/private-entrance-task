@@ -653,6 +653,8 @@ input, select {
               .wrapper .main-part .right-side .dashboard .floor-section .event-section .ev-block.selected {
                 background: #9aa9b9;
                 z-index: 2; }
+              .wrapper .main-part .right-side .dashboard .floor-section .event-section .ev-block .add-event-button {
+                position: absolute; }
         .wrapper .main-part .right-side .dashboard .event-info {
           background: #FFFFFF;
           box-shadow: 0 1px 16px 0 rgba(0, 44, 92, 0.28);
