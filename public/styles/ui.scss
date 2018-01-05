@@ -210,9 +210,8 @@ input, select {
   height: 100%;
   background: rgba(0,16,33,0.4);
   .splash-content {
-    min-width: 300px;
+    width: 320px;
     padding: 30px 70px;
-    @include border-box();
     background: #FFFFFF;
     box-shadow: 0 1px 16px 0 rgba(0,44,92,0.28);
     border-radius: 8px;
