@@ -211,7 +211,7 @@ input, select {
   background: rgba(0,16,33,0.4);
   .splash-content {
     min-width: 300px;
-    padding: 30px 25px;
+    padding: 30px 70px;
     @include border-box();
     background: #FFFFFF;
     box-shadow: 0 1px 16px 0 rgba(0,44,92,0.28);
@@ -380,5 +380,19 @@ input, select {
   .participant .photo, .control-element {
     width: 32px;
     height: 32px;
+  }
+
+  [uib-datepicker-popup-wrap] {
+    width: 100%;
+    left: 0;
+    table {
+      width: 100%;
+    }
+  }
+
+  .splash {
+    .splash-content {
+      padding: 30px 25px;
+    }
   }
 }

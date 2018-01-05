@@ -260,15 +260,60 @@
     }
     .chosen-date {
       height: 56px;
+      [uib-datepicker-popup-wrap] {
+        top: 55px;
+      }
     }
     .main-part {
       .left-side {
+        position: absolute;
+        padding: 0 12px;
+        width: auto;
+        z-index: 3;
         .floors-list {
           margin-top: 32px;
           @include shadow(0 -1px 0 0 #E9ECEF);
+          padding: 0;
+          .floor {
+            .floor-title {
+              margin: 0 0 5px 4px;
+            }
+            .room-block {
+              @include flex();
+              justify-content: center;
+              align-items: center;
+              background: #FFFFFF;
+              @include shadow(0 1px 8px 0 rgba(0, 44, 92, 0.28));
+              @include border-radius(4px);
+              margin: 1px 0 35px 0;
+              height: 24px;
+              @include border-box();
+              .room-title {
+                font-size: 11px;
+                padding: 0 8px;
+              }
+              .person-limit {
+                display: none;
+              }
+            }
+          }
         }
       }
       .right-side {
+        .dashboard {
+          width: 100vw;
+          @include calc("height", "100vh - 136px");
+          .floor-section {
+            margin: 40px 0 0 0;
+            .event-section {
+              margin: 1px 0;
+              height: 58px;
+              .ev-block {
+                height: 58px;
+              }
+            }
+          }
+        }
         .timeline {
           height: 32px;
           .current-time {

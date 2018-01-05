@@ -247,7 +247,7 @@
                     var eventBlockWidth = 330;
                     var preLeft = e.currentTarget.getBoundingClientRect().left - (eventBlockWidth - e.currentTarget.clientWidth) / 2;
 
-                    eventInfoBlock.style.left = (preLeft +eventBlockWidth > document.body.clientWidth ? (document.body.clientWidth -  eventBlockWidth) : preLeft) + "px";
+                    eventInfoBlock.style.left = (preLeft + eventBlockWidth > document.body.clientWidth ? (document.body.clientWidth - eventBlockWidth) : (preLeft > 0 ? preLeft : 0)) + "px";
                     eventInfoBlock.style.top = e.currentTarget.getBoundingClientRect().top + e.currentTarget.clientHeight + "px";
                 } else {
                     locateToEvent();

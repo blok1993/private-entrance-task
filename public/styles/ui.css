@@ -227,7 +227,7 @@ input, select {
   background: rgba(0, 16, 33, 0.4); }
   .splash .splash-content {
     min-width: 300px;
-    padding: 30px 25px;
+    padding: 30px 70px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
@@ -366,6 +366,15 @@ input, select {
 
   .participant .photo, .control-element {
     width: 32px;
-    height: 32px; } }
+    height: 32px; }
+
+  [uib-datepicker-popup-wrap] {
+    width: 100%;
+    left: 0; }
+    [uib-datepicker-popup-wrap] table {
+      width: 100%; }
+
+  .splash .splash-content {
+    padding: 30px 25px; } }
 
 /*# sourceMappingURL=ui.css.map */
