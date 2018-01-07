@@ -218,7 +218,8 @@ input, select {
     border-radius: 100%;
     margin-right: 8px;
     background-repeat: no-repeat;
-    background-position: center; }
+    background-position: center;
+    background-size: cover; }
 
 .splash {
   position: absolute;
