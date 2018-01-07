@@ -58,9 +58,9 @@
         </div>
         <div class="dashboard" drag-scroll="true">
             <div ng-repeat="fl in floors | orderBy:'-' track by $index" class="floor-section">
-                <div ng-repeat="room in fl.rooms track by $index" ng-mouseover="toggleShowAddButton(true, room)" ng-mouseleave="toggleShowAddButton(false, room)" ng-mousemove="moveAddButton($event)" class="event-section">
-                    <div ng-style="{'width': calcEventWidth(event), 'left': calcEventLeft(event)}" class="ev-block {{event.id === selectedEvent.id && forTooltips.showEventInfo ? 'selected' : ''}}" ng-mouseover="toggleShowAddButton(false, room); $event.stopPropagation()" ng-repeat="event in room.events" ng-click="toggleEventInfo($event, event, room)"></div>
-                    <button ng-show="room.hovered" ng-click="createNewEvent($event, room)" ng-mousedown="toggleAddButtonPress(true, room)" ng-mouseup="toggleAddButtonPress(false, room)" class="add-event-button desktop">+</button>
+                <div ng-repeat="room in fl.rooms track by $index" ng-click="createNewEvent($event, room)" ng-mouseover="toggleShowAddButton(true, room)" ng-mouseleave="toggleShowAddButton(false, room)" ng-mousemove="moveAddButton($event)" class="event-section">
+                    <div ng-style="{'width': calcEventWidth(event), 'left': calcEventLeft(event)}" class="ev-block {{event.id === selectedEvent.id && forTooltips.showEventInfo ? 'selected' : ''}}" ng-mouseover="toggleShowAddButton(false, room); $event.stopPropagation()" ng-repeat="event in room.events" ng-click="toggleEventInfo($event, event, room); $event.stopPropagation()"></div>
+                    <button ng-show="room.hovered" ng-click="createNewEvent($event, room); $event.stopPropagation()" ng-mousedown="toggleAddButtonPress(true, room)" ng-mouseup="toggleAddButtonPress(false, room)" class="add-event-button desktop">+</button>
                 </div>
             </div>
 

@@ -267,13 +267,13 @@
     .main-part {
       .left-side {
         position: absolute;
-        padding: 0 12px;
+        padding: 0 8px;
         width: auto;
         z-index: 3;
         .floors-list {
           margin-top: 32px;
           @include shadow(0 -1px 0 0 #E9ECEF);
-          padding: 0;
+          padding: 0 4px;
           .floor {
             .floor-title {
               margin: 0 0 5px 4px;

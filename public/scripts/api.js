@@ -7,12 +7,16 @@
     {
         return {
             getRooms: getRooms,
+            getEvent: getEvent,
             getEvents: getEvents,
             getUsers: getUsers,
             getEventUsers: getEventUsers,
             createEvent: createEvent,
             updateEvent: updateEvent,
-            deleteEvent: deleteEvent
+            removeEvent: removeEvent,
+            changeEventRoom: changeEventRoom,
+            addUserToEvent: addUserToEvent,
+            removeUserFromEvent: removeUserFromEvent
         };
 
         function getRooms()
@@ -25,6 +29,11 @@
             return httpGetRequest('/api/getEvents', {});
         }
 
+        function getEvent(id)
+        {
+            return httpGetRequest('/api/getEvent', {id: id});
+        }
+
         function getUsers()
         {
             return httpGetRequest('/api/getUsers', {});
@@ -34,16 +43,28 @@
             return httpGetRequest('/api/getEventUsers', {id: id});
         }
 
-        function createEvent() {
-            return httpPostRequest('/api/createEvent', {});
+        function createEvent(input, usersIds, roomId) {
+            return httpPostRequest('/api/createEvent', {input: input, usersIds: usersIds, roomId: roomId});
         }
 
-        function updateEvent() {
-            return httpPostRequest('/api/updateEvent', {});
+        function updateEvent(id, input) {
+            return httpPostRequest('/api/updateEvent', {id: id, input: input});
         }
 
-        function deleteEvent() {
-            return httpPostRequest('/api/deleteEvent', {});
+        function removeEvent(id) {
+            return httpPostRequest('/api/removeEvent', {id: id});
+        }
+
+        function changeEventRoom(id, roomId) {
+            return httpPostRequest('/api/changeEventRoom', {id: id, roomId: roomId});
+        }
+
+        function addUserToEvent(id, userId) {
+            return httpPostRequest('/api/addUserToEvent', {id: id, userId: userId});
+        }
+
+        function removeUserFromEvent(id, userId) {
+            return httpPostRequest('/api/removeUserFromEvent', {id: id, userId: userId});
         }
 
         function httpGetRequest(url, params, config)

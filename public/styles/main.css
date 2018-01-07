@@ -707,7 +707,7 @@ input, select {
       top: 55px; }
   .wrapper .main-part .left-side {
     position: absolute;
-    padding: 0 12px;
+    padding: 0 8px;
     width: auto;
     z-index: 3; }
     .wrapper .main-part .left-side .floors-list {
@@ -717,7 +717,7 @@ input, select {
       -ms-box-shadow: 0 -1px 0 0 #E9ECEF;
       -o-box-shadow: 0 -1px 0 0 #E9ECEF;
       box-shadow: 0 -1px 0 0 #E9ECEF;
-      padding: 0; }
+      padding: 0 4px; }
       .wrapper .main-part .left-side .floors-list .floor .floor-title {
         margin: 0 0 5px 4px; }
       .wrapper .main-part .left-side .floors-list .floor .room-block {

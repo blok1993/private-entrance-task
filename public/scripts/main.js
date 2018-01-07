@@ -103,7 +103,7 @@
             }
 
             function createNewEvent(e, room) {
-                $location.path('/event').search({roomId: room.id, date: encodeURIComponent(new Date($scope.dt).getFullYear() + "-" + (new Date($scope.dt).getMonth() + 1) + "-" + new Date($scope.dt).getDate())});
+                $location.path('/event').search({roomId: room.id, date: encodeURIComponent(new Date($scope.dt).getFullYear() + "-" + (new Date($scope.dt).getMonth()) + "-" + new Date($scope.dt).getDate())});
             }
 
             //Current time identifier
@@ -186,7 +186,7 @@
             }
 
             function calcEventWidth(event) {
-                return (new Date(event.dateEnd).getTime() - new Date(event.dateStart).getTime()) / (1000 * 60) * 100 / (24 * 60) + '%';
+                return (new Date(event.dateEnd).getTime() - new Date(event.dateStart).getTime()) / (1000 * 60) * 100 / (24.5 * 60) + '%';
             }
 
             function calcEventLeft(event) {
@@ -256,14 +256,11 @@
             }
 
             function _datesHaveIntersection(ev) {
-                let dateStart = ev.dateStart;
-                let dateEnd = ev.dateEnd;
-
                 function getFormattedString(date) {
-                    return new Date(date).getFullYear() + "-" + new Date(date).getMonth() + "-" + new Date().getDate();
+                    return new Date(date).getFullYear() + "-" + new Date(date).getMonth() + "-" + new Date(date).getDate();
                 }
 
-                return (getFormattedString(dateStart) === getFormattedString($scope.dt) || getFormattedString(dateEnd) === getFormattedString($scope.dt) || (new Date(dateStart).getTime() < new Date($scope.dt) && new Date(dateEnd).getTime() > new Date($scope.dt)));
+                return (getFormattedString(ev.dateStart) === getFormattedString($scope.dt));
             }
         });
 }());
