@@ -218,7 +218,8 @@ input, select {
     border-radius: 100%;
     margin-right: 8px;
     background-repeat: no-repeat;
-    background-position: center; }
+    background-position: center;
+    background-size: cover; }
 
 .splash {
   position: absolute;
@@ -625,10 +626,10 @@ input, select {
           display: flex;
           flex-direction: column;
           flex-shrink: 0;
-          min-width: 1584px; }
+          min-width: 1617px; }
           .wrapper .main-part .right-side .dashboard .floor-section .event-section {
-            margin: 4px 0;
-            height: 44px;
+            margin: 12px 0;
+            height: 28px;
             display: -webkit-box;
             display: -moz-box;
             display: -ms-flexbox;
@@ -636,17 +637,15 @@ input, select {
             display: flex;
             align-items: center;
             flex-direction: row;
-            flex-shrink: 0; }
+            flex-shrink: 0;
+            background: #fff;
+            position: relative; }
+            .wrapper .main-part .right-side .dashboard .floor-section .event-section .add-event-button {
+              position: absolute; }
             .wrapper .main-part .right-side .dashboard .floor-section .event-section .ev-block {
               height: 28px;
               background: #D5DFE9;
-              display: -webkit-box;
-              display: -moz-box;
-              display: -ms-flexbox;
-              display: -webkit-flex;
-              display: flex;
-              flex: 1;
-              justify-content: center; }
+              position: absolute; }
               .wrapper .main-part .right-side .dashboard .floor-section .event-section .ev-block:hover {
                 background: #98A9B9;
                 z-index: 2; }
@@ -657,8 +656,6 @@ input, select {
               .wrapper .main-part .right-side .dashboard .floor-section .event-section .ev-block.selected {
                 background: #9aa9b9;
                 z-index: 2; }
-              .wrapper .main-part .right-side .dashboard .floor-section .event-section .ev-block .add-event-button {
-                position: absolute; }
         .wrapper .main-part .right-side .dashboard .event-info {
           background: #FFFFFF;
           box-shadow: 0 1px 16px 0 rgba(0, 44, 92, 0.28);

@@ -15,15 +15,13 @@
                     redirectTo: "/"
                 });
         })
-        .controller("GlobalController", function GlobalController($scope, $route, UiModal)
+        .controller("GlobalController", function GlobalController($scope, $route, $location, UiModal)
         {
-            $scope.openModal = openModal;
+            $scope.locateToEvent = locateToEvent;
 
-            function openModal() {
-                UiModal.info("Встреча создана!", "14 декабря, 15:00 - 17:00 \n Готем&nbsp;·&nbsp;4 этаж", "Хорошо");
+            function locateToEvent() {
+                $location.path('/event');
             }
-
-
         });
 }());
 

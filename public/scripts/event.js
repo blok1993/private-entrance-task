@@ -7,6 +7,18 @@
             $scope.person = {};
             $scope.isNewEvent = true;
 
+            $scope.clearTopic = clearTopic;
+            $scope.clearParticipantName = clearParticipantName;
+            $scope.today = today;
+            $scope.openEventCalendar = openEventCalendar;
+            $scope.setDate = setDate;
+            $scope.calMove = calMove;
+            $scope.removeEvent = removeEvent;
+            $scope.closeEventForm = closeEventForm;
+            $scope.toggleRoomSelection = toggleRoomSelection;
+            $scope.addParticipantToEvent = addParticipantToEvent;
+            $scope.removeParticipantFromEvent = removeParticipantFromEvent;
+
             $scope.people = [
                 {name: "Лекс Лютер", floor: 1},
                 {name: "Томас Андерсон", floor: 2},
@@ -30,18 +42,6 @@
 
                 $scope.roomIsSelected = true;
             }
-
-            $scope.clearTopic = clearTopic;
-            $scope.clearParticipantName = clearParticipantName;
-            $scope.today = today;
-            $scope.openEventCalendar = openEventCalendar;
-            $scope.setDate = setDate;
-            $scope.calMove = calMove;
-            $scope.removeEvent = removeEvent;
-            $scope.closeEventForm = closeEventForm;
-            $scope.toggleRoomSelection = toggleRoomSelection;
-            $scope.addParticipantToEvent = addParticipantToEvent;
-            $scope.removeParticipantFromEvent = removeParticipantFromEvent;
 
             function clearTopic() {
                 $scope.q.topic = '';
@@ -77,7 +77,7 @@
             }
 
             function _removeElementFromArrayByName(el, arr) {
-                for(var i = 0; i < arr.length; i++) {
+                for(let i = 0; i < arr.length; i++) {
                     if(arr[i].name === el.name) {
                         arr.splice(i, 1);
                         break;
@@ -117,7 +117,7 @@
             today();
 
             function calMove(a) {
-                var currentDate = new Date($scope.date);
+                let currentDate = new Date($scope.date);
                 currentDate.setDate(currentDate.getDate() + a);
                 $scope.date = new Date(currentDate);
             }

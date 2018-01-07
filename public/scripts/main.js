@@ -1,178 +1,16 @@
 (function() {
-    angular.module("MainApp", ["Ui", "ngSanitize", "ngAnimate", "ui.bootstrap", "ng-drag-scroll"])
-        .controller("MainController", function MainController($scope, $rootScope, $location)
+    angular.module("MainApp", ["AppApi", "Ui", "ngSanitize", "ngAnimate", "ui.bootstrap", "ng-drag-scroll"])
+        .controller("MainController", function MainController($scope, $rootScope, $location, AppApi)
         {
             $rootScope.showCreateButton = true;
             $scope.hoursArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
             $scope.selectedEvent = {};
             $scope.forTooltips = {};
             $scope.currentTime = "";
-
-            var monthNames = ["январь", "февраль", "март", "апрель", "май", "июнь",
-                "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
-            ];
-
-            //Mock data for static content
-            $scope.floors = [
-                {
-                    rooms: [
-                        {
-                            id: "abc",
-                            events: [
-                                {
-                                    id: "1"
-                                },
-                                {
-                                    id: "2",
-                                    free: true
-                                },
-                                {
-                                    id: "3"
-                                },
-                                {
-                                    id: "4",
-                                    free: true
-                                },
-                                {
-                                    id: "5"
-                                },
-                                {
-                                    id: "6",
-                                    free: true
-                                }
-                            ]
-                        },
-                        {
-                            id: "abd",
-                            events: [
-                                {
-                                    id: "7"
-                                },
-                                {
-                                    id: "8"
-                                },
-                                {
-                                    id: "9"
-                                },
-                                {
-                                    id: "10"
-                                },
-                                {
-                                    id: "11"
-                                },
-                                {
-                                    id: "12"
-                                }
-                            ]
-                        },
-                        {
-                            id: "abg",
-                            events: [
-                                {
-                                    id: "13"
-                                },
-                                {
-                                    id: "14",
-                                    free: true
-                                },
-                                {
-                                    id: "15"
-                                },
-                                {
-                                    id: "16",
-                                    free: true
-                                },
-                                {
-                                    id: "17"
-                                },
-                                {
-                                    id: "18",
-                                    free: true
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    rooms: [
-                        {
-                            id: "azx",
-                            events: [
-                                {
-                                    id: "111"
-                                },
-                                {
-                                    id: "211",
-                                    free: true
-                                },
-                                {
-                                    id: "311"
-                                },
-                                {
-                                    id: "411",
-                                    free: true
-                                },
-                                {
-                                    id: "511"
-                                },
-                                {
-                                    id: "611",
-                                    free: true
-                                }
-                            ]
-                        },
-                        {
-                            id: "azc",
-                            events: [
-                                {
-                                    id: "221"
-                                },
-                                {
-                                    id: "222"
-                                },
-                                {
-                                    id: "223"
-                                },
-                                {
-                                    id: "224"
-                                },
-                                {
-                                    id: "225"
-                                },
-                                {
-                                    id: "226"
-                                }
-                            ]
-                        },
-                        {
-                            id: "azb",
-                            events: [
-                                {
-                                    id: "331"
-                                },
-                                {
-                                    id: "332",
-                                    free: true
-                                },
-                                {
-                                    id: "333"
-                                },
-                                {
-                                    id: "334",
-                                    free: true
-                                },
-                                {
-                                    id: "335"
-                                },
-                                {
-                                    id: "336",
-                                    free: true
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ];
+            $scope.rooms = [];
+            $scope.floorsObj = {};
+            $scope.floors = [];
+            $scope.allEvents = [];
 
             $scope.toggleEventInfo = toggleEventInfo;
             $scope.toggleAddButtonPress = toggleAddButtonPress;
@@ -186,12 +24,31 @@
             $scope.locateToEvent = locateToEvent;
             $scope.isPreviousHour = isPreviousHour;
             $scope.moveAddButton = moveAddButton;
+            $scope.calcEventWidth = calcEventWidth;
+            $scope.calcEventLeft = calcEventLeft;
+            $scope.createNewEvent = createNewEvent;
+            $scope.declOfNum = declOfNum;
 
-            function toggleShowAddButton(ev, a, room) {
-                if(ev.free) {
-                    ev.hovered = a;
-                    room.hovered = a;
-                }
+            let monthNames = ["январь", "февраль", "март", "апрель", "май", "июнь",
+                "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"
+            ];
+
+            //Drag of dashboard
+            let dashboard = document.getElementsByClassName("dashboard");
+            let wrappedResult = angular.element(dashboard);
+
+            let timeline = document.getElementsByClassName("timeline");
+            let floorsList = document.getElementsByClassName("floors-list-wrap");
+
+            angular.element(wrappedResult).bind("scroll", function(e) {
+                e = e || window.event;
+
+                timeline[0].style.transform = "translateX(-" + e.target.scrollLeft + "px)";
+                floorsList[0].style.transform = "translateY(-" + e.target.scrollTop + "px)";
+            });
+
+            function toggleShowAddButton(a, room) {
+                room.hovered = a;
 
                 if(!a) {
                     room.pressed = false;
@@ -210,63 +67,52 @@
                 return h <= new Date().getHours();
             }
 
-            //Drag of dashboard
-            var dashboard = document.getElementsByClassName("dashboard");
-            var wrappedResult = angular.element(dashboard);
+            function moveAddButton(e) {
+                let el = e.target.getElementsByClassName('add-event-button')[0];
 
-            var timeline = document.getElementsByClassName("timeline");
-            var floorsList = document.getElementsByClassName("floors-list-wrap");
-
-            angular.element(wrappedResult).bind("scroll", function(e) {
-                e = e || window.event;
-
-                timeline[0].style.transform = "translateX(-" + e.target.scrollLeft + "px)";
-                floorsList[0].style.transform = "translateY(-" + e.target.scrollTop + "px)";
-            });
-
-            function moveAddButton(e, ev) {
-                if(ev.free && e.target.children[0]) {
-                    e.target.children[0].style.top = e.target.offsetTop - dashboard[0].scrollTop;
-                    e.target.children[0].style.left = e.clientX - 28;
-                }
+                if(el) {
+                    el.style.top = 0;
+                    el.style.left = e.clientX - 245 - 28 + dashboard[0].scrollLeft;
+                 }
             }
 
-            function toggleEventInfo(e, ev) {
+            function toggleEventInfo(e, ev, room) {
                 e = e || window.event;
 
-                if(!ev.free) {
-                    if($scope.selectedEvent.id === ev.id) {
-                        $scope.forTooltips.showEventInfo = !$scope.forTooltips.showEventInfo;
-                    } else {
-                        $scope.forTooltips.showEventInfo = true;
-                    }
-
-                    $scope.selectedEvent = ev;
-
-                    var eventInfoBlock = document.getElementsByClassName("event-info")[0];
-                    var eventBlockWidth = 330;
-                    var preLeft = e.currentTarget.getBoundingClientRect().left - (eventBlockWidth - e.currentTarget.clientWidth) / 2;
-
-                    eventInfoBlock.style.left = (preLeft + eventBlockWidth > document.body.clientWidth ? (document.body.clientWidth - eventBlockWidth) : (preLeft > 0 ? preLeft : 0)) + "px";
-                    eventInfoBlock.style.top = e.currentTarget.getBoundingClientRect().top + e.currentTarget.clientHeight + "px";
+                if($scope.selectedEvent.id === ev.id) {
+                    $scope.forTooltips.showEventInfo = !$scope.forTooltips.showEventInfo;
                 } else {
-                    locateToEvent();
+                    $scope.forTooltips.showEventInfo = true;
                 }
+
+                $scope.selectedEvent = ev;
+                $scope.selectedEvent.room = room;
+
+                AppApi.getEventUsers(ev.id).then(function (res) {
+                    $scope.selectedEvent.users = res;
+                }, function (err) {
+                    console.log(err);
+                });
+
+                let eventInfoBlock = document.getElementsByClassName("event-info")[0];
+                let eventBlockWidth = 330;
+                let preLeft = e.currentTarget.getBoundingClientRect().left - (eventBlockWidth - e.currentTarget.clientWidth) / 2;
+
+                eventInfoBlock.style.left = (preLeft + eventBlockWidth > document.body.clientWidth ? (document.body.clientWidth - eventBlockWidth) : (preLeft > 0 ? preLeft : 0)) + "px";
+                eventInfoBlock.style.top = e.currentTarget.getBoundingClientRect().top + e.currentTarget.clientHeight + "px";
             }
 
-            //Current time
-            var currentTimeElement = document.getElementsByClassName("current-time")[0];
-            var currentTimeElementText = document.getElementsByClassName("current-time")[0].getElementsByClassName("time")[0];
+            function createNewEvent(e, room) {
+                $location.path('/event').search({roomId: room.id, date: encodeURIComponent(new Date($scope.dt).getFullYear() + "-" + (new Date($scope.dt).getMonth() + 1) + "-" + new Date($scope.dt).getDate())});
+            }
+
+            //Current time identifier
+            let currentTimeElement = document.getElementsByClassName("current-time")[0];
+            let currentTimeElementText = document.getElementsByClassName("current-time")[0].getElementsByClassName("time")[0];
 
             function currentTime() {
                 if(timeline[0]) {
-                    var xPos;
-
-                    if(new Date().getHours() === 23 && new Date().getMinutes() > 30) {
-                        xPos = (new Date().getMinutes() - 30) * timeline[0].clientWidth / (24 * 60) - currentTimeElement.clientWidth / 2 < 0 ? 0 : (new Date().getMinutes() - 30) * timeline[0].clientWidth / (24 * 60) - currentTimeElement.clientWidth / 2;
-                    } else {
-                        xPos = (new Date().getHours() * 60 + new Date().getMinutes() + 30) * timeline[0].clientWidth / (24 * 60) - currentTimeElement.clientWidth / 2;
-                    }
+                    let xPos = (new Date().getHours() * 60 + new Date().getMinutes() + 30) * timeline[0].clientWidth / (24 * 60) - currentTimeElement.clientWidth / 2;
 
                     currentTimeElement.style.left = xPos;
                     currentTimeElementText.innerText = new Date().getHours() + ":" + (new Date().getMinutes() > 9 ? new Date().getMinutes() : "0" + new Date().getMinutes());
@@ -313,7 +159,7 @@
             }
 
             function formAdditionalText(date) {
-                var rez = "";
+                let rez = "";
 
                 if(new Date(new Date(date).getFullYear(), new Date(date).getMonth(), new Date(date).getDate()).getTime() === new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()).getTime()) {
                     rez = "· Сегодня";
@@ -325,9 +171,99 @@
             }
 
             function calMove(a) {
-                var currentDate = new Date($scope.dt);
+                let currentDate = new Date($scope.dt);
                 currentDate.setDate(currentDate.getDate() + a);
                 $scope.dt = new Date(currentDate);
+
+                //Удаляем events в каждой комнате при изменении даты.
+                for(let i = 0; i < $scope.floors.length; i++) {
+                    for(let j = 0; j < $scope.floors[i].rooms.length; j++) {
+                        delete $scope.floors[i].rooms[j].events;
+                    }
+                }
+
+                _addEventsToRooms(angular.copy($scope.allEvents));
+            }
+
+            function calcEventWidth(event) {
+                return (new Date(event.dateEnd).getTime() - new Date(event.dateStart).getTime()) / (1000 * 60) * 100 / (24 * 60) + '%';
+            }
+
+            function calcEventLeft(event) {
+                return ((new Date(event.dateStart).getTime() - new Date(_startOfDate($scope.dt)).getTime()) / (1000 * 60) + 30) * 100 / (24 * 60) + '%';
+            }
+
+            function _startOfDate(dt) {
+                return new Date(new Date(dt).getFullYear(), new Date(dt).getMonth(), new Date(dt).getDate(), 0, 0, 0);
+            }
+
+            //Получаем комнаты и созданные события.
+            AppApi.getRooms().then(function (res) {
+
+                //Группировка комнат по этажам
+                for(let i = 0; i < res.length; i++) {
+                    if(!$scope.floorsObj[res[i].floor]) {
+                        $scope.floorsObj[res[i].floor] = {floor: res[i].floor, rooms: []};
+                    }
+
+                    $scope.floorsObj[res[i].floor].rooms.push(res[i]);
+                }
+
+                $scope.floors = Object.values($scope.floorsObj);
+
+                //После получения всех комнат, получаем события.
+                getEvents();
+
+            }, function (err) {
+                console.log(err);
+            });
+
+            function getEvents() {
+                AppApi.getEvents().then(function (res) {
+
+                    $scope.allEvents = angular.copy(res);
+
+                    _addEventsToRooms(res);
+
+                }, function (err) {
+                    console.log(err);
+                });
+            }
+
+            function declOfNum(number, titles) {
+                let cases = [2, 0, 1, 1, 1, 2];
+                return titles[ (number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5] ];
+            }
+
+            function _addEventsToRooms(res) {
+                //Выберем только те события, которые пересекаются с указанной датой.
+                let filteredEvents = res.filter(_datesHaveIntersection);
+
+                //Занесем созданные events в соответствующие rooms.
+                for(let i = 0; i < $scope.floors.length; i++) {
+                    for(let j = 0; j < $scope.floors[i].rooms.length; j++) {
+                        for(let k = 0; k < filteredEvents.length; k++) {
+                            if($scope.floors[i].rooms[j].id === filteredEvents[k].RoomId) {
+                                if(!$scope.floors[i].rooms[j].events) {
+                                    $scope.floors[i].rooms[j].events = [];
+                                }
+
+                                $scope.floors[i].rooms[j].events.push(filteredEvents[k]);
+                            }
+                        }
+                    }
+                }
+            }
+
+            function _datesHaveIntersection(ev) {
+                let dateStart = ev.dateStart;
+                let dateEnd = ev.dateEnd;
+
+                function getFormattedString(date) {
+                    return new Date(date).getFullYear() + "-" + new Date(date).getMonth() + "-" + new Date().getDate();
+                }
+
+                return (getFormattedString(dateStart) === getFormattedString($scope.dt) || getFormattedString(dateEnd) === getFormattedString($scope.dt) || (new Date(dateStart).getTime() < new Date($scope.dt) && new Date(dateEnd).getTime() > new Date($scope.dt)));
             }
         });
 }());

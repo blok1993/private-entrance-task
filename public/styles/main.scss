@@ -175,20 +175,23 @@
           @include flex();
           flex-direction: column;
           flex-shrink: 0;
-          min-width: 24 * $minHourWidth;
+          min-width: 24.5 * $minHourWidth;
           .event-section {
-            margin: 4px 0;
-            height: 44px;
+            margin: 12px 0;
+            height: 28px;
             @include flex();
             align-items: center;
             flex-direction: row;
             flex-shrink: 0;
+            background: #fff;
+            position: relative;
+            .add-event-button {
+              position: absolute;
+            }
             .ev-block {
               height: 28px;
               background: #D5DFE9;
-              @include flex();
-              flex: 1;
-              justify-content: center;
+              position: absolute;
               &:hover {
                 background: #98A9B9;
                 z-index: 2;
@@ -202,9 +205,6 @@
               &.selected {
                 background: #9aa9b9;
                 z-index: 2;
-              }
-              .add-event-button {
-                position: absolute;
               }
             }
           }
