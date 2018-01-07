@@ -190,7 +190,7 @@
             }
 
             function calcEventLeft(event) {
-                return ((new Date(event.dateStart).getTime() - new Date(_startOfDate($scope.dt)).getTime()) / (1000 * 60) + 30) * 100 / (24 * 60) + '%';
+                return ((new Date(event.dateStart).getTime() - new Date(_startOfDate($scope.dt)).getTime()) / (1000 * 60) + 30) * 100 / (24.5 * 60) + '%';
             }
 
             function _startOfDate(dt) {
