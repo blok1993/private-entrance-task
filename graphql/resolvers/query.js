@@ -26,5 +26,10 @@ module.exports = {
 
   rooms (root, args, context) {
     return models.Room.findAll({});
+  },
+
+  //Recommendations
+  recommendations (root, {date, members}, context) {
+    return null;
   }
 };

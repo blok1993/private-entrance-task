@@ -5,8 +5,11 @@ const bodyParser = require('body-parser');
 
 const pagesRoutes = require('./pages/routes');
 const graphqlRoutes = require('./graphql/routes');
+const graphqlResolversQuery = require('./graphql/resolvers/query');
+const graphqlResolversMutation = require('./graphql/resolvers/mutation');
 
 const { models } = require('./models');
+
 
 const app = express();
 
@@ -19,39 +22,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Api
 app.get('/api/getRooms', function (req, res) {
-    models.Room.findAll({}).then(result => {
-            res.send(result);
-        }, err => {
-            console.log(err);
-        }
-    );
+    graphqlResolversQuery.rooms().then(r => {
+        res.send(r);
+    });
 });
 
 app.get('/api/getEvent', function (req, res) {
-    models.Event.findById(req.query.id).then(result => {
-            res.send(result);
-        }, err => {
-            console.log(err);
-        }
-    );
+    graphqlResolversQuery.event(null, {id: req.query.id}).then(r => {
+        res.send(r);
+    });
 });
 
 app.get('/api/getEvents', function (req, res) {
-    models.Event.findAll({}).then(result => {
-            res.send(result);
-        }, err => {
-            console.log(err);
-        }
-    );
+    graphqlResolversQuery.events().then(r => {
+        res.send(r);
+    });
 });
 
 app.get('/api/getUsers', function (req, res) {
-    models.User.findAll({}).then(result => {
-            res.send(result);
-        }, err => {
-            console.log(err);
-        }
-    );
+    graphqlResolversQuery.users().then(r => {
+        res.send(r);
+    });
 });
 
 app.get('/api/getEventUsers', function (req, res) {
@@ -66,57 +57,39 @@ app.get('/api/getEventUsers', function (req, res) {
 });
 
 app.post('/api/createEvent', function (req, res) {
-    models.Event.create(req.body.input)
-        .then(event => {
-            event.setRoom(req.body.roomId);
-
-            return event.setUsers(req.body.usersIds)
-                .then(() => {
-                    res.send(event);
-                });
-        });
+    graphqlResolversMutation.createEvent(null, {input: req.body.input, usersIds: req.body.usersIds, roomId: req.body.roomId}).then(r => {
+        res.send(r);
+    });
 });
 
 app.post('/api/updateEvent', function (req, res) {
-    models.Event.findById(req.body.id)
-        .then(event => {
-            event.update(req.body.input)
-                .then(ev => {
-                    res.send(ev);
-                });
-        });
+    graphqlResolversMutation.updateEvent(null, {id: req.body.id, input: req.body.input}).then(r => {
+        res.send(r);
+    });
 });
 
 app.post('/api/removeEvent', function (req, res) {
-    models.Event.findById(req.body.id)
-        .then(event => {
-            res.send(event);
-            event.destroy();
-        });
+    graphqlResolversMutation.removeEvent(null, {id: req.body.id}).then(r => {
+        res.send(r);
+    });
 });
 
 app.post('/api/removeUserFromEvent', function (req, res) {
-    models.Event.findById(req.body.id)
-        .then(event => {
-            event.removeUser(req.body.userId);
-            res.send(event);
-        });
+    graphqlResolversMutation.removeUserFromEvent(null, {id: req.body.id, userId: req.body.userId}).then(r => {
+        res.send(r);
+    });
 });
 
 app.post('/api/addUserToEvent', function (req, res) {
-    models.Event.findById(req.body.id)
-        .then(event => {
-            event.addUser(req.body.userId);
-            res.send(event);
-        });
+    graphqlResolversMutation.addUserToEvent(null, {id: req.body.id, userId: req.body.userId}).then(r => {
+        res.send(r);
+    });
 });
 
 app.post('/api/changeEventRoom', function (req, res) {
-    models.Event.findById(req.body.id)
-        .then(event => {
-            event.setRoom(req.body.roomId);
-            res.send(event);
-        });
+    graphqlResolversMutation.changeEventRoom(null, {id: req.body.id, roomId: req.body.roomId}).then(r => {
+        res.send(r);
+    });
 });
 
 app.listen(3000, () => console.log('Express app listening on localhost:3000'));
