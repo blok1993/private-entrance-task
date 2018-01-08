@@ -272,7 +272,10 @@
                         AppApi.getRecommendation(date, members).then(function (data) {
                             if(data.status === 1) {
                                 $scope.recMessage = data.message;
+                                $scope.recommendedRooms = [];
                             } else {
+                                $scope.recMessage = null;
+
                                 for(let i = 0; i < data.length; i++) {
                                     for(let j = 0; j < $scope.rooms.length; j++) {
                                         if(data[i].room === $scope.rooms[j].id) {

@@ -97,6 +97,7 @@
             <div ng-show="eventTimeStart && eventTimeEnd" class="col-4 for-rooms {{!roomIsSelected ? 'room-is-not-selected' : ''}}">
                 <div class="col-12 no-padd">
                     <div class="input-title">{{roomIsSelected ? "Ваша переговорка" : "Рекомендованные переговорки"}}</div>
+                    <div class="rec-message" ng-if="recMessage">{{recMessage}}</div>
                     <div class="recommended-room" ng-repeat="room in recommendedRooms track by $index" ng-click="toggleRoomSelection(true, room)" ng-if="!roomIsSelected">
                         <div class="time">{{timeAppearance(eventTimeStart)}} - {{timeAppearance(eventTimeEnd)}}</div>
                         <div class="title">{{room.title}}&nbsp;·&nbsp;{{room.floor}} этаж</div>
