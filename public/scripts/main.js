@@ -123,37 +123,6 @@
 
             currentTime();
 
-            //Calendar
-            $scope.popup1 = {
-                opened: false
-            };
-
-            $scope.dateOptions = {
-                formatYear: 'yy',
-                minDate: new Date(),
-                startingDay: 1,
-                showWeeks: false,
-                maxMode: 'day'
-            };
-
-            $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-            $scope.format = $scope.formats[0];
-            $scope.altInputFormats = ['M!/d!/yyyy'];
-
-            function openCalendar() {
-                $scope.popup1.opened = true;
-            }
-
-            function setDate(year, month, day) {
-                $scope.dt = new Date(year, month, day);
-            }
-
-            function today() {
-                $scope.dt = new Date();
-            }
-
-            today();
-
             function formDateText(date) {
                 return new Date(date).getDate() + " " + monthNames[new Date(date).getMonth()].substring(0, 3);
             }
@@ -262,5 +231,36 @@
 
                 return (getFormattedString(ev.dateStart) === getFormattedString($scope.dt));
             }
+
+            //Calendar
+            $scope.popup1 = {
+                opened: false
+            };
+
+            $scope.dateOptions = {
+                formatYear: 'yy',
+                minDate: new Date(),
+                startingDay: 1,
+                showWeeks: false,
+                maxMode: 'day'
+            };
+
+            $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+            $scope.format = $scope.formats[0];
+            $scope.altInputFormats = ['M!/d!/yyyy'];
+
+            function openCalendar() {
+                $scope.popup1.opened = true;
+            }
+
+            function setDate(year, month, day) {
+                $scope.dt = new Date(year, month, day);
+            }
+
+            function today() {
+                $scope.dt = new Date();
+            }
+
+            today();
         });
 }());

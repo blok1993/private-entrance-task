@@ -55,15 +55,15 @@ module.exports = {
 
   addUserToEvent (root, { id, userId }, context) {
       return models.Event.findById(id)
-          .then(event => {
-              event.addUser(userId).then(a => {
-                  console.log("Пользователь успешно добавлен");
-              }, b => {
-                  console.log("Этот пользователь уже был добавлен.");
-              });
+              .then(event => {
+                  event.addUser(userId).then(a => {
+                      console.log("Пользователь успешно добавлен");
+                  }, b => {
+                      console.log("Этот пользователь уже был добавлен.");
+                  });
 
-              return event;
-          });
+                  return event;
+              });
   },
 
   removeUserFromEvent (root, { id, userId }, context) {
