@@ -92,4 +92,10 @@ app.post('/api/changeEventRoom', function (req, res) {
     });
 });
 
+app.post('/api/getRecommendation', function (req, res) {
+    graphqlResolversQuery.getRecommendation(null, {date: req.body.date, members: req.body.members}).then(r => {
+        res.send(r);
+    });
+});
+
 app.listen(3000, () => console.log('Express app listening on localhost:3000'));

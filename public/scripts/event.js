@@ -8,6 +8,7 @@
             $scope.recommendedRooms = [];
             $scope.selectedRoom = {};
             $scope.isNewEvent = true;
+            $scope.roomIsSelected = false;
             $scope.users = [];
             $scope.addedUsers = [];
             $scope.rooms = [];
@@ -26,6 +27,7 @@
             $scope.addParticipantToEvent = addParticipantToEvent;
             $scope.removeParticipantFromEvent = removeParticipantFromEvent;
             $scope.timeAppearance = timeAppearance;
+            $scope.getRecommendation = getRecommendation;
 
             function clearTopic() {
                 $scope.q.topic = '';
@@ -93,6 +95,10 @@
                 }
 
                 $scope.selectedRoom = a ? room : undefined;
+
+                if(!a) {
+                    getRecommendation();
+                }
             }
 
             function addParticipantToEvent(person, flg) {
@@ -102,7 +108,11 @@
                 if($location.search().id && flg) {
                     AppApi.addUserToEvent($location.search().id, person.id).then(function (data) {
                         console.log("Пользователь успешно добавлен.");
+
+                        getRecommendation();
                     });
+                } else {
+                    getRecommendation();
                 }
 
                 $scope.person.selected = undefined;
@@ -116,7 +126,11 @@
                 if($location.search().id && flg) {
                     AppApi.removeUserFromEvent($location.search().id, person.id).then(function (data) {
                         console.log("Пользователь был удален из встречи.");
+
+                        getRecommendation();
                     });
+                } else {
+                    getRecommendation();
                 }
             }
 
@@ -236,6 +250,47 @@
 
             function _formCorrectDateOfEvent(event) {
                 return $filter('date')(event.dateStart, "d MMMM") + ", " + $filter('date')(event.dateStart, "HH:mm") + " — " + $filter('date')(event.dateEnd, "HH:mm");
+            }
+
+            function getRecommendation() {
+                if($scope.eventTimeStart && $scope.eventTimeEnd && ($scope.roomIsSelected === false) && $scope.addedUsers.length) {
+
+                    let date = {
+                        start: new Date(_createDateFromParts($scope.date, $scope.eventTimeStart)).getTime(),
+                        end: new Date(_createDateFromParts($scope.date, $scope.eventTimeEnd)).getTime()
+                    };
+
+                    let members = $scope.addedUsers.map(function (person) {
+                        return {
+                            login: person.login,
+                            floor: person.homeFloor,
+                            avatar: person.avatarUrl
+                        };
+                    });
+
+                    if(date.start < date.end) {
+                        AppApi.getRecommendation(date, members).then(function (data) {
+                            if(data.status === 1) {
+                                $scope.recMessage = data.message;
+                            } else {
+                                for(let i = 0; i < data.length; i++) {
+                                    for(let j = 0; j < $scope.rooms.length; j++) {
+                                        if(data[i].room === $scope.rooms[j].id) {
+                                            data[i].title = $scope.rooms[j].title;
+                                            data[i].floor = $scope.rooms[j].floor;
+                                            data[i].id = $scope.rooms[j].id;
+                                        }
+                                    }
+                                }
+
+                                $scope.recommendedRooms = data;
+
+                            }
+                        }, function (err) {
+                            console.log(err);
+                        });
+                    }
+                }
             }
 
             //Calendar

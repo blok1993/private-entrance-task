@@ -33,7 +33,7 @@
                       <div class="input-title desktop">Дата</div>
                       <div class="input-title mobile">Дата и время</div>
                       <div class="input-wrap">
-                          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date" datepicker-template-url="lib/ui/datepicker/datepicker-tmpl.html" is-open="popupCalendar.opened" datepicker-options="dateOptions" alt-input-formats="altInputFormats" />
+                          <input type="text" class="form-control" ng-change="getRecommendation()" uib-datepicker-popup="{{format}}" ng-model="date" datepicker-template-url="lib/ui/datepicker/datepicker-tmpl.html" is-open="popupCalendar.opened" datepicker-options="dateOptions" alt-input-formats="altInputFormats" />
                           <div class="calendar-icon" ng-click="openEventCalendar()">
                               <img src="media/calendar.svg" />
                           </div>
@@ -45,7 +45,7 @@
                                 <div class="input-title desktop">Начало</div>
                                 <div class="input-wrap">
                                     <div class="timepicker">
-                                        <input ui-mask="99:99" ng-model="eventTimeStart" class="time" type="text" ui-mask-placeholder="чч:мм" select-on-click />
+                                        <input ui-mask="99:99" ng-model="eventTimeStart" ng-change="getRecommendation()" class="time" type="text" ui-mask-placeholder="чч:мм" select-on-click />
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +56,7 @@
                                 <div class="input-title desktop">Конец</div>
                                 <div class="input-wrap">
                                     <div class="timepicker">
-                                        <input ui-mask="99:99" ng-model="eventTimeEnd" class="time" type="text" ui-mask-placeholder="чч:мм" select-on-click />
+                                        <input ui-mask="99:99" ng-model="eventTimeEnd" ng-change="getRecommendation()" class="time" type="text" ui-mask-placeholder="чч:мм" select-on-click />
                                     </div>
                                 </div>
                             </div>
@@ -97,7 +97,7 @@
             <div ng-show="eventTimeStart && eventTimeEnd" class="col-4 for-rooms {{!roomIsSelected ? 'room-is-not-selected' : ''}}">
                 <div class="col-12 no-padd">
                     <div class="input-title">{{roomIsSelected ? "Ваша переговорка" : "Рекомендованные переговорки"}}</div>
-                    <div class="recommended-room" ng-repeat="room in rooms track by $index" ng-click="toggleRoomSelection(true, room)" ng-if="!roomIsSelected">
+                    <div class="recommended-room" ng-repeat="room in recommendedRooms track by $index" ng-click="toggleRoomSelection(true, room)" ng-if="!roomIsSelected">
                         <div class="time">{{timeAppearance(eventTimeStart)}} - {{timeAppearance(eventTimeEnd)}}</div>
                         <div class="title">{{room.title}}&nbsp;·&nbsp;{{room.floor}} этаж</div>
                     </div>
@@ -144,6 +144,6 @@
         <button class="cancel-button" ng-click="closeEventForm()">Отмена</button>
         <button ng-if="!isNewEvent" class="cancel-button" ng-click="removeEvent()">Удалить встречу</button>
         <button ng-if="!isNewEvent" ng-click="updateEvent()">Сохранить</button>
-        <button ng-if="isNewEvent" ng-click="createEvent()">Создать встречу</button>
+        <button ng-if="isNewEvent" ng-disabled="!q.topic || !selectedRoom.title || !addedUsers.length" ng-click="createEvent()">Создать встречу</button>
     </div>
 </div>

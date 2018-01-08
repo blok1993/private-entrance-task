@@ -16,7 +16,8 @@
             removeEvent: removeEvent,
             changeEventRoom: changeEventRoom,
             addUserToEvent: addUserToEvent,
-            removeUserFromEvent: removeUserFromEvent
+            removeUserFromEvent: removeUserFromEvent,
+            getRecommendation: getRecommendation
         };
 
         function getRooms()
@@ -65,6 +66,10 @@
 
         function removeUserFromEvent(id, userId) {
             return httpPostRequest('/api/removeUserFromEvent', {id: id, userId: userId});
+        }
+
+        function getRecommendation(date, members) {
+            return httpPostRequest('/api/getRecommendation', {date: date, members: members});
         }
 
         function httpGetRequest(url, params, config)

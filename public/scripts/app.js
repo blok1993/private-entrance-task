@@ -20,7 +20,7 @@
             $scope.locateToEvent = locateToEvent;
 
             function locateToEvent() {
-                $location.path('/event');
+                $location.path('/event').search({});
             }
         });
 }());
