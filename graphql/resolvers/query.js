@@ -82,7 +82,7 @@ module.exports = {
                      ((dateStart >= iterEvDateStart && dateStart < iterEvDateEnd) || (dateEnd > iterEvDateStart && dateEnd <= iterEvDateEnd))
             }
 
-            roomEventsMap[rooms[i].id].hasIntersection = roomEventsMap[rooms[i].id].events.some(datesHaveIntersection);
+            roomEventsMap[rooms[i].id].hasIntersection = roomEventsMap[rooms[i].id].events ? roomEventsMap[rooms[i].id].events.some(datesHaveIntersection) : false;
 
             if(!roomEventsMap[rooms[i].id].hasIntersection) {
               recommendations.push({date: date, room: rooms[i].id, floorsForPassage: roomEventsMap[rooms[i].id].floorsForPassage});

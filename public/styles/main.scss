@@ -175,7 +175,7 @@
           @include flex();
           flex-direction: column;
           flex-shrink: 0;
-          min-width: 24.5 * $minHourWidth;
+          min-width: 24 * $minHourWidth;
           .event-section {
             margin: 12px 0;
             height: 28px;

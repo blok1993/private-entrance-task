@@ -155,11 +155,11 @@
             }
 
             function calcEventWidth(event) {
-                return (new Date(event.dateEnd).getTime() - new Date(event.dateStart).getTime()) / (1000 * 60) * 100 / (24.5 * 60) + '%';
+                return (new Date(event.dateEnd).getTime() - new Date(event.dateStart).getTime()) / (1000 * 60) * 100 / (24 * 60) + '%';
             }
 
             function calcEventLeft(event) {
-                return ((new Date(event.dateStart).getTime() - new Date(_startOfDate($scope.dt)).getTime()) / (1000 * 60) + 30) * 100 / (24.5 * 60) + '%';
+                return ((new Date(event.dateStart).getTime() - new Date(_startOfDate($scope.dt)).getTime()) / (1000 * 60) + 30) * 100 / (24 * 60) + '%';
             }
 
             function _startOfDate(dt) {
@@ -220,8 +220,22 @@
                                 $scope.floors[i].rooms[j].events.push(filteredEvents[k]);
                             }
                         }
+
+                        $scope.floors[i].rooms[j].noTimeAvailable = _noTimeAvailable($scope.floors[i].rooms[j].events);
                     }
                 }
+            }
+
+            function _noTimeAvailable(events) {
+                if(events) {
+                    let result = events.reduce(function (sum, current) {
+                        return sum + (new Date(current.dateEnd).getTime() - new Date(current.dateStart).getTime()) / (1000 * 60);
+                    }, 0);
+
+                    return result === 24*60;
+                }
+
+                return false;
             }
 
             function _datesHaveIntersection(ev) {

@@ -35,7 +35,7 @@
                     <div class="floor-title title-text">{{fl.floor}} ЭТАЖ</div>
 
                     <div class="rooms-list">
-                        <div class="room-block {{room.hovered ? 'active' : ''}} {{$odd ? 'disabled' : ''}} {{room.pressed ? 'pressed' : ''}}" ng-repeat="room in fl.rooms track by $index">
+                        <div class="room-block {{room.hovered ? 'active' : ''}} {{room.noTimeAvailable ? 'disabled' : ''}} {{room.pressed ? 'pressed' : ''}}" ng-repeat="room in fl.rooms track by $index">
                             <div class="room-title title-text">{{room.title}}</div>
                             <div class="person-limit">до {{room.capacity}} человек{{(room.capacity % 10 === 1 && room.capacity % 100 !== 11) ? 'a' : ''}}</div>
                         </div>
