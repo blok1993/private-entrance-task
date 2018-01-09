@@ -131,20 +131,20 @@
             <div class="col-12 for-deleting">
                 <div class="button-holder">
                     <button class="cancel-button" ng-click="closeEventForm()">Отмена</button>
-                    <button ng-click="">Сохранить</button>
+                    <button ng-disabled="!q.topic || !eventTimeStart || !eventTimeEnd" ng-click="updateEvent()">Сохранить</button>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="button-holder creation mobile" ng-if="isNewEvent">
-        <button ng-disabled="!roomIsSelected" ng-click="">Создать встречу</button>
+        <button ng-disabled="!roomIsSelected" ng-disabled="!q.topic || !selectedRoom.title || !addedUsers.length || !eventTimeStart || !eventTimeEnd" ng-click="createEvent()">Создать встречу</button>
     </div>
 
     <div class="button-holder desktop">
         <button class="cancel-button" ng-click="closeEventForm()">Отмена</button>
         <button ng-if="!isNewEvent" class="cancel-button" ng-click="removeEvent()">Удалить встречу</button>
-        <button ng-if="!isNewEvent" ng-click="updateEvent()">Сохранить</button>
-        <button ng-if="isNewEvent" ng-disabled="!q.topic || !selectedRoom.title || !addedUsers.length" ng-click="createEvent()">Создать встречу</button>
+        <button ng-if="!isNewEvent" ng-disabled="!q.topic || !eventTimeStart || !eventTimeEnd" ng-click="updateEvent()">Сохранить</button>
+        <button ng-if="isNewEvent" ng-disabled="!q.topic || !selectedRoom.title || !addedUsers.length || !eventTimeStart || !eventTimeEnd" ng-click="createEvent()">Создать встречу</button>
     </div>
 </div>
