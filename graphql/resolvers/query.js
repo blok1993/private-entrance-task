@@ -46,6 +46,7 @@ module.exports = {
           //Для каждой комнаты запишем соответствующие события. roomId: { floorsForPassage: Number, events: {Event}[] }
           let roomEventsMap = {};
           let recommendations = [];
+          let recommendationsWithSwap = [];
 
           for(let i = 0; i < rooms.length; i++) {
 
@@ -79,13 +80,35 @@ module.exports = {
               let dateEnd = new Date(date.end).getTime();
 
               return ((iterEvDateStart >= dateStart && iterEvDateStart < dateEnd) || (iterEvDateEnd > dateStart && iterEvDateEnd <= dateEnd)) ||
-                     ((dateStart >= iterEvDateStart && dateStart < iterEvDateEnd) || (dateEnd > iterEvDateStart && dateEnd <= iterEvDateEnd))
+                     ((dateStart >= iterEvDateStart && dateStart < iterEvDateEnd) || (dateEnd > iterEvDateStart && dateEnd <= iterEvDateEnd));
             }
 
             roomEventsMap[rooms[i].id].hasIntersection = roomEventsMap[rooms[i].id].events ? roomEventsMap[rooms[i].id].events.some(datesHaveIntersection) : false;
 
             if(!roomEventsMap[rooms[i].id].hasIntersection) {
               recommendations.push({date: date, room: rooms[i].id, floorsForPassage: roomEventsMap[rooms[i].id].floorsForPassage});
+            } else {
+                /*
+                  Для каждой комнаты в поле segment запишем дату начала самого первого события, и дату конца последнего, пересекающихся с необходимым диапозоном дат для нового события.
+                  А также введем массив с id потенциальных событий для переноса.
+                */
+                roomEventsMap[rooms[i].id].segment = {
+                    from: null,
+                    to: null,
+                    eventsToMove: []
+                };
+
+                if(roomEventsMap[rooms[i].id].events) {
+                    roomEventsMap[rooms[i].id].events.forEach(function (item) {
+                        if(datesHaveIntersection(item)) {
+                            roomEventsMap[rooms[i].id].segment.from = roomEventsMap[rooms[i].id].segment.from ? Math.min(new Date(item.dateStart).getTime(), new Date(roomEventsMap[rooms[i].id].segment.from).getTime()) : new Date(item.dateStart).getTime();
+                            roomEventsMap[rooms[i].id].segment.to = roomEventsMap[rooms[i].id].segment.to ? Math.max(new Date(item.dateEnd).getTime(), new Date(roomEventsMap[rooms[i].id].segment.to).getTime()) : new Date(item.dateEnd).getTime();
+                            roomEventsMap[rooms[i].id].segment.eventsToMove.push(item.id);
+                        }
+                    });
+
+                    recommendationsWithSwap.push(roomEventsMap[rooms[i].id]);
+                }
             }
           }
 
@@ -104,7 +127,37 @@ module.exports = {
               Необходимо произвести swap, если это возможно. Либо дождаться освобождения одной из переговорок.
             */
 
-            return {status: 1, message: "В выбраный промежуток все переговорки заняты. Перенесите, по возможности, встречи в другие переговорки, либо измените дату и время новой встречи."};
+            recommendationsWithSwap.sort(function (a, b) {
+              return a.floorsForPassage - b.floorsForPassage;
+            });
+
+            let swap = [];
+            let abort = false;
+
+            //Выбираем самую первую подходящую рекоммендацию по свапу
+            for(let i = 0; i < recommendationsWithSwap.length && !abort; i++) {
+              for(let j = i + 1; j < recommendationsWithSwap.length; j++) {
+                if(!recommendationsWithSwap[j].events.some(function (ev) {
+                        let iterEvDateStart = new Date(ev.dateStart).getTime();
+                        let iterEvDateEnd = new Date(ev.dateEnd).getTime();
+                        let dateStart = new Date(recommendationsWithSwap[i].segment.from).getTime();
+                        let dateEnd = new Date(recommendationsWithSwap[i].segment.to).getTime();
+
+                        return ((iterEvDateStart >= dateStart && iterEvDateStart < dateEnd) || (iterEvDateEnd > dateStart && iterEvDateEnd <= dateEnd)) ||
+                            ((dateStart >= iterEvDateStart && dateStart < iterEvDateEnd) || (dateEnd > iterEvDateStart && dateEnd <= iterEvDateEnd));
+                    })
+                ) {
+                    recommendationsWithSwap[i].segment.eventsToMove.forEach(function (t) {
+                        swap.push({event: t, room: recommendationsWithSwap[j].events[0].RoomId});
+                    });
+
+                    abort = true;
+                    break;
+                }
+              }
+            }
+
+            return {status: 1, message: "В выбраный промежуток все переговорки заняты. Перенесите, по возможности, встречи в другие переговорки, либо измените дату и время новой встречи.", swap: swap};
           }
       });
   }

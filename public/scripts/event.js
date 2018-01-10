@@ -271,10 +271,10 @@
                     if(date.start < date.end) {
                         AppApi.getRecommendation(date, members).then(function (data) {
                             if(data.status === 1) {
-                                $scope.recMessage = data.message;
+                                $scope.rec = data;
                                 $scope.recommendedRooms = [];
                             } else {
-                                $scope.recMessage = null;
+                                $scope.rec = null;
 
                                 for(let i = 0; i < data.length; i++) {
                                     for(let j = 0; j < $scope.rooms.length; j++) {
